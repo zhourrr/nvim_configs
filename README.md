@@ -1,1 +1,3 @@
-# vim
+# Vim
+
+Configuration files.
