@@ -2,6 +2,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- set up leader key
+vim.g.mapleader = " "
+
 
 --
 -- helpers 
@@ -11,7 +14,7 @@ local opt = vim.opt
 
 -- call set_key_map function
 local function map(mode, shortcut, command)
-    vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+    vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true })
 end
 
 -- set normal mode mapping
@@ -19,10 +22,15 @@ local function nmap(shortcut, command)
     map('n', shortcut, command)
 end
 
+-- set visual mode mapping
+local function vmap(shortcut, command)
+    map('v', shortcut, command)
+end
 
 --
 -- load plugins via Packer
 -- type :Packer and see the available commands
+-- type :checkhealth to check health!
 --
 local ensure_packer = function()        -- automatically install packer
   local fn = vim.fn
@@ -46,6 +54,16 @@ require("packer").startup(function(use)     -- install plugins
     use "williamboman/mason.nvim"           -- LSP servers manager
     use "williamboman/mason-lspconfig.nvim" -- helper for mason.nvim
     use "neovim/nvim-lspconfig"             -- Nvim LSP client configs 
+    use {
+        "hrsh7th/nvim-cmp",                 -- autocompletion engine
+        requires = {                        -- autocompletion sources
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline"
+        }
+    }
     -- format
     use "lukas-reineke/indent-blankline.nvim"
     -- file explorer
@@ -71,10 +89,10 @@ end)
 --
 cmd[[colorscheme nightfox]]             -- colorscheme
 
-require("nvim-treesitter.configs").setup{
+require("nvim-treesitter.configs").setup {
     -- language parsers that should always be installed
     ensure_installed = {
-        "lua",
+        --"lua",
         "c",
         "cpp",
         "python"
@@ -85,47 +103,96 @@ require("nvim-treesitter.configs").setup{
 }
 
 -- install LSP servers
+-- type :mason to see details
 require("mason").setup()
-require("mason-lspconfig").setup({
+require("mason-lspconfig").setup {
     -- language servers that should always be installed
     ensure_installed = {
         "sumneko_lua",
         "clangd",
-        "cmake",
+        --"cmake",
         "rust_analyzer",
-        "pyright"
+        --"pyright"
     }
-})
+}
+
+require('telescope').setup {        -- telescope: previewer
+   defaults = {
+        layout_strategy = "horizontal",
+        layout_config = {
+            width = 0.9,            -- floating window takes up 90% of the screen
+            preview_width = 0.5     -- preview window takes up 50% of the floating window 
+        },
+        initial_mode = "normal",
+        mappings = {
+            n = {
+                -- kill selected buffer in buffer picker
+                ["<Leader>k"] = require("telescope.actions").delete_buffer
+            }
+        }
+   }
+}
 
 -- set up LSP configs
-local on_attach = function(client, bufnr)
+local on_attach = function(client, bufnr)   -- has effect only if the language server is active
     local function lsp_map(mode, shortcut, command)
         vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true, buffer = bufnr})
     end
 
-    lsp_map('n', 'gd', vim.lsp.buf.definition)
-    lsp_map('n', 'gr', vim.lsp.buf.references)
-    lsp_map('n', '<Leader>k', vim.lsp.buf.hover)            -- provides documentation
-    lsp_map('n', '<F2>', vim.lsp.buf.rename)
-    lsp_map('n', '<C-k>', vim.lsp.buf.signature_help)       -- provides documentation as you type the argument
-    lsp_map('i', '<C-k>', vim.lsp.buf.signature_help)       -- provides documentation as you type the argument
-    lsp_map('n', 'go', vim.diagnostic.open_float)
-      --vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-      --vim.keymap.set('n', '<leader>d', '<cmd>Telescope lsp_document_symbols<cr>', bufopts)
+    -- auto format on save
+    cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
+    nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
+    nmap('gr', '<cmd>Telescope lsp_references<CR>')
+    nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
+    nmap('ge', '<cmd>Telescope diagnostics<CR>')
+    lsp_map('n', '<Leader>h', vim.lsp.buf.hover)                -- provides documentation
+    lsp_map('n', '<Leader>s', vim.lsp.buf.signature_help)       -- provides documentation as you type the argument
+    lsp_map('i', '<Leader>s', vim.lsp.buf.signature_help)       -- provides documentation as you type the argument
+    lsp_map('n', '<F2>', vim.lsp.buf.rename)                    -- rename a symbol
 end
-require"lspconfig".clangd.setup{ on_attach = on_attach }
-require"lspconfig".pyright.setup{ on_attach = on_attach }
 
--- file explorer
-require("nvim-tree").setup({
+-- configure each language server
+require "lspconfig".clangd.setup{ on_attach = on_attach }
+require "lspconfig".pyright.setup{ on_attach = on_attach }
+
+-- set up autocompletion engine
+opt.completeopt = menu, menuone, noselect
+local cmp = require("cmp")
+local select_opts = { behavior = cmp.SelectBehavior.Select }
+
+cmp.setup {
+    mapping = {
+        [ "<CR>" ] = cmp.mapping.confirm({ select = false }),
+        [ "<Up>" ] = cmp.mapping.select_prev_item(select_opts),
+        [ "<Down>" ] = cmp.mapping.select_next_item(select_opts),
+        [ "<Tab>" ] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item(select_opts)
+            else
+                cmp.complete()
+            end
+        end)
+    },
+    sources = { -- the order affects the priority
+        { name = "nvim_lsp_signature_help", priority = 8 },
+        { name = "nvim-lsp", keyword_length = 2, priority = 8 },
+        { name = "path" , keyword_length = 2, priority = 1 },
+        { name = "buffer", keyword_length = 2, priority = 1 }
+    }
+}
+
+require("nvim-tree").setup {    -- file explorer
     sort_by = "case_sensitive",
     view = {
-        adaptive_size = true
+        adaptive_size = true    -- the side bar size changes as needed
+    },
+    renderer = {
+        group_empty = true
     },
     filters = {
-        dotfiles = true
+        dotfiles = true         -- hide dotfiles
     }
-})
+}
 
 
 --
@@ -146,15 +213,16 @@ opt.smartcase = true        -- works as case-insensitive if you only use lowerca
 -- format
 opt.cursorline = true       -- highlight the cursorline
 opt.termguicolors = true    -- true color support
-opt.wrap = false
-opt.textwidth = 120
+opt.wrap = true             -- wrap very long lines to make them look like multiple lines
+opt.textwidth = 120         -- character limits in one line
 opt.autoindent = true
 opt.expandtab = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 
--- mouse
-opt.mouse = "nv"
+-- device
+opt.mouse = "nv"            -- normal and visual mode
+opt.clipboard = "unnamedplus"
 
 -- display file name on the terminal title
 opt.title = true
@@ -165,17 +233,26 @@ opt.wb = false
 opt.swapfile = false
 
 -- special key mappings
-vim.g.mapleader = " "
 nmap("<C-s>", "<cmd>w<cr>")                             -- save file
 nmap("<Leader>q", "<cmd>q<cr>")                         -- quit file
+-- move cursor by visual lines instead of physical lines when wrapping
+nmap("j", "gj")                                         
+nmap("k", "gk")
+vmap("j", "gj")
+vmap("k", "gk")
 -- leap
-nmap("<Leader>f", "<Plug>(leap-forward-to)")
-nmap("<Leader>b", "<Plug>(leap-backward-to)")
--- telescope
-nmap("<Leader>tf", "<cmd>Telescope find_files<cr>")     -- search files in the current working directory
-nmap("<Leader>to", "<cmd>Telescope buffers<cr>")        -- search opened files
-nmap("<Leader>t?", "<cmd>Telescope oldfiles<cr>")       -- search recently opened files
+nmap("<Leader>f", "<Plug>(leap-forward-to)")            -- easymotion forward
+nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
+-- telescope, t for telescope
+-- use navigation keys in telescope, such as j and k; press i to enter insert mode
+-- <C-v> vsplit, <C-x> split; 
+nmap("<Leader>tf", "<cmd>Telescope find_files<cr>")     -- search for files in the current working directory
+nmap("<Leader>tg", "<cmd>Telescope live_grep<cr>")      -- search for strings in the current working directory
+nmap("<Leader>tb", "<cmd>Telescope buffers<cr>")        -- list opened files (buffers)
+nmap("<Leader>to", "<cmd>Telescope oldfiles<cr>")       -- list recently opened files
 -- nvim-tree
+-- open a file: <C-v> vsplit, <C-x> split
+-- r: rename; a: create; d: remove
 nmap("<C-b>", ":NvimTreeFindFileToggle<CR>")            -- toogle file tree
---nmap("<C-k>", ":NvimTreeCollapse<CR>")                  -- collapses the nvim-tree recursively
+nmap("<C-z>", ":NvimTreeCollapse<CR>")                  -- collapses the nvim-tree recursively
 
