@@ -134,7 +134,7 @@ require('telescope').setup {            -- telescope: picker and previewer
 -- You can also install servers manually, and then add the following line in your LSP setup.
 --      cmd = { "path-to-your-language-server-executable" } 
 --      Example:
---          require "lspconfig".clangd.setup {
+--          require("lspconfig").clangd.setup {
 --              cmd = { "path-to-your-clangd-server-executable" },
 --              on_attach = on_attach
 --          }
@@ -149,7 +149,7 @@ require("mason-lspconfig").setup {
 }
 
 -- set up LSP configs
--- type :lsp to see available commands
+-- type :lsp to see available commands, such as LspInfo
 local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
     -- lsp services
     nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
@@ -166,8 +166,8 @@ local on_attach = function(client, bufnr)                   -- has effects only 
 end
 
 -- configure each language server
-require "lspconfig".clangd.setup { on_attach = on_attach }
-require "lspconfig".pyright.setup { on_attach = on_attach }
+require("lspconfig").clangd.setup { on_attach = on_attach }
+require("lspconfig").pyright.setup { on_attach = on_attach }
 
 -- set up autocompletion engine
 opt.completeopt = { "menu", "menuone", "noselect" }         -- autocompletion menu
