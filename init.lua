@@ -3,7 +3,7 @@
 -- <cmd>your command<CR>
 -- or
 -- <cmd>lua <some function name><CR>
--- Note that <cmd> is colon and <CR> is Enter.
+-- Note that <cmd> is colon and <CR> is Enter. The lua functions usually end with operator ()
 
 
 -- disable the default file explorer
