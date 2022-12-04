@@ -14,22 +14,19 @@ vim.g.mapleader = " "
 
 
 --
--- helpers
+-- helpers and set_key_mapping functions
 --
 local cmd = vim.cmd
 local opt = vim.opt
-
--- call set_key_map function
+-- call built-in keymap.set function
 local function map(mode, shortcut, command)
     vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true })
 end
-
--- set normal mode mapping
+-- helper function for setting normal mode mapping
 local function nmap(shortcut, command)
     map('n', shortcut, command)
 end
-
--- set visual mode mapping
+-- helper function for setting visual mode mapping
 local function vmap(shortcut, command)
     map('v', shortcut, command)
 end
