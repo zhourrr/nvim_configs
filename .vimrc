@@ -13,7 +13,7 @@ set smartcase   " works as case-insensitive if you only use lowercase letters; o
                 " search in case-sensitive mode
 
 " format 
-set textwidth=100
+set textwidth=120
 set autoindent
 set expandtab
 set tabstop=4
@@ -30,3 +30,10 @@ set nobackup
 set nowb
 set noswapfile
 
+" special mappings
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
+nmap <C-s> <cmd>w<CR>
+nmap <Space>q <cmd>q<CR>
