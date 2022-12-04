@@ -56,6 +56,7 @@ require("packer").startup(function(use)             -- install plugins
     use "ggandor/leap.nvim"                         -- easymotion
     use "lukas-reineke/indent-blankline.nvim"       -- show indents
     use "terrortylor/nvim-comment"                  -- toggle comments
+    use "karb94/neoscroll.nvim"                     -- smooth scroll
     -- Language Server Protocol (LSP)
     use "nvim-treesitter/nvim-treesitter"           -- highlight
     use "nvim-treesitter/nvim-treesitter-context"   -- sticky scroll
@@ -94,11 +95,13 @@ end)
 --
 cmd [[colorscheme nightfox]]        -- colorscheme
 
-require('nvim_comment').setup {     -- toggle comments
+require("nvim_comment").setup {     -- toggle comments
     create_mappings = true,
     line_mapping = "<Leader>cc",    -- in normal mode, comment the current line
     operator_mapping = "<Leader>c"  -- in visual mode, comment the selected lines
 }
+
+require("neoscroll").setup()
 
 require("nvim-treesitter.configs").setup {
     -- language parsers that should always be installed
