@@ -1,3 +1,10 @@
+-- Basically, you can type commands in the command mode. 
+-- If you want to write it in a command in your script, usually you can write:
+-- <cmd>your command<CR>
+-- or
+-- <cmd>lua <some function name><CR>
+-- Note that <cmd> is colon and <CR> is Enter.
+
 -- disable the default file explorer
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -115,7 +122,7 @@ require("mason-lspconfig").setup {
     ensure_installed = {
         "clangd",
         "rust_analyzer",
-        "pyright"
+        --"pyright"
     }
 }
 
@@ -138,12 +145,12 @@ require('telescope').setup {            -- telescope: picker and previewer
 
 -- set up LSP configs
 -- type :lsp to see available commands
-local on_attach = function(client, bufnr)       -- has effects only if the language server is active
+local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
     -- lsp services
     nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
     nmap('gr', '<cmd>Telescope lsp_references<CR>')
     nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
-    nmap('ge', '<cmd>Telescope diagnostics<CR>')
+    nmap('ge', vim.diagnostic.open_float)                   -- print error message in a floating window
     nmap('ga', vim.lsp.buf.code_action)                     -- code actions, such as quick fixes
     nmap('gh', vim.lsp.buf.hover)                           -- provides documentation
     nmap('gs', vim.lsp.buf.signature_help)                  -- provides documentation as you type the argument
@@ -296,10 +303,11 @@ nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
 -- telescope, t for telescope
 -- use navigation keys in telescope, such as j and k; press i to enter insert mode
 -- <C-v> vsplit, <C-x> split;
-nmap("<Leader>tf", "<cmd>Telescope find_files<cr>")     -- searches for files in the current working directory
-nmap("<Leader>tg", "<cmd>Telescope live_grep<cr>")      -- searches for strings in the current working directory
-nmap("<Leader>tb", "<cmd>Telescope buffers<cr>")        -- lists opened files (buffers)
-nmap("<Leader>to", "<cmd>Telescope oldfiles<cr>")       -- lists recently opened files
+nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
+nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")      -- searches for strings in the current working directory
+nmap("<Leader>tb", "<cmd>Telescope buffers<CR>")        -- lists opened files (buffers)
+nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
+nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- nvim-tree, you can actually use your mouse!
 -- <Enter> open a file; <C-v> vsplit; <C-x> split;
 -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; H: toggle dotfiles
