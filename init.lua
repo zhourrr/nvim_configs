@@ -300,7 +300,7 @@ vmap("k", "gk")
 -- Neovim terminal mode
 -- type :term to enter the terminal 
 -- type <Esc> to enter normal mode in the terminal, then you can use file explorer to switch buffers
-vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 -- leap
 nmap("<Leader>f", "<Plug>(leap-forward-to)")            -- easymotion forward
 nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
