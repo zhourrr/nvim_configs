@@ -112,18 +112,6 @@ require("nvim-treesitter.configs").setup {
     }
 }
 
--- install LSP servers
--- type :mason to see more details
-require("mason").setup()
-require("mason-lspconfig").setup {
-    -- language servers that should always be installed
-    ensure_installed = {
-        "clangd",
-        "rust_analyzer",
-        --"pyright"
-    }
-}
-
 require('telescope').setup {            -- telescope: picker and previewer
     defaults = {
         layout_strategy = "horizontal",
@@ -138,6 +126,25 @@ require('telescope').setup {            -- telescope: picker and previewer
                 ["<Leader>k"] = require("telescope.actions").delete_buffer
             }
         }
+    }
+}
+
+-- install LSP servers
+-- I am using mason.nvim to automatically install LSP server. Type :mason to see more details
+-- You can also install servers manually, and then add the following line in your LSP setup.
+--      cmd = { "path-to-your-language-server-executable" } 
+--      Example:
+--          require "lspconfig".clangd.setup {
+--              cmd = { "path-to-your-clangd-server-executable" },
+--              on_attach = on_attach
+--          }
+require("mason").setup()
+require("mason-lspconfig").setup {
+    -- language servers that should always be installed
+    ensure_installed = {
+        "clangd",
+        "rust_analyzer",
+        --"pyright"
     }
 }
 
