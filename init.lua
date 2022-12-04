@@ -1,5 +1,5 @@
 -- Basically, you can type commands in the command mode. 
--- If you want to write it in a command in your script, usually you can write:
+-- If you want to write a command in your script, usually you can write like this:
 -- <cmd>your command<CR>
 -- or
 -- <cmd>lua <some function name><CR>
