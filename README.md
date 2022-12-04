@@ -1,4 +1,4 @@
-# Vim
+# Vim and Neovim
 
 Configuration files for vim and neovim.
 
