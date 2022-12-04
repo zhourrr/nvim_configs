@@ -5,6 +5,7 @@
 -- <cmd>lua <some function name><CR>
 -- Note that <cmd> is colon and <CR> is Enter.
 
+
 -- disable the default file explorer
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -294,6 +295,10 @@ nmap("j", "gj")
 nmap("k", "gk")
 vmap("j", "gj")
 vmap("k", "gk")
+-- Neovim terminal mode
+-- type :term to enter the terminal 
+-- type <Esc> to enter normal mode in the terminal, then you can use file explorer to switch buffers
+vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 -- leap
 nmap("<Leader>f", "<Plug>(leap-forward-to)")            -- easymotion forward
 nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
@@ -312,3 +317,4 @@ nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- P: go to parent node; <BackSpace>: close current opened directory
 nmap("<C-b>", ":NvimTreeFindFileToggle<CR>")            -- toogle file tree
 nmap("<C-z>", ":NvimTreeCollapse<CR>")                  -- collapses the nvim-tree recursively
+
