@@ -1,6 +1,4 @@
-# Vim and Neovim
-
-Configuration files for vim and neovim.
+# Configuration Files for Vim and Neovim.
 
 I know nothing about lua language, therefore I almost commented everything in the init.lua file.
 
