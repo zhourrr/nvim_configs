@@ -311,7 +311,7 @@ nmap("<Leader>tb", "<cmd>Telescope buffers<CR>")        -- lists opened files (b
 nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
 nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- nvim-tree, you can actually use your mouse!
--- <Enter> open a file; <C-v> vsplit; <C-x> split;
+-- <Enter> open a file; <C-v> vsplit; <C-x> split; <C-]> cd into the directory
 -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; 
 -- H: toggle dotfiles; I: toggle git-ignore;
 -- P: go to parent node; <BackSpace>: close current opened directory
