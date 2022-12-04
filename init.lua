@@ -148,6 +148,8 @@ local on_attach = function(client, bufnr)                   -- has effects only 
     nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
     nmap('gr', '<cmd>Telescope lsp_references<CR>')
     nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
+    nmap('gb', '<cmd>Telescope lsp_document_symbols<CR>')   -- list symbols in the current buffer
+    nmap('gw', '<cmd>Telescope lsp_workspace_symbols<CR>')  -- list symbols in the current workspace
     nmap('ge', vim.diagnostic.open_float)                   -- print error message in a floating window
     nmap('ga', vim.lsp.buf.code_action)                     -- code actions, such as quick fixes
     nmap('gh', vim.lsp.buf.hover)                           -- provides documentation
@@ -307,6 +309,7 @@ nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
 -- <C-v> vsplit, <C-x> split;
 nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
 nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")      -- searches for strings in the current working directory
+nmap("<Leader>tz", "<cmd>Telescope current_buffer_fuzzy_find<CR>")  -- fuzzy search in the current buffer
 nmap("<Leader>tb", "<cmd>Telescope buffers<CR>")        -- lists opened files (buffers)
 nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
 nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
