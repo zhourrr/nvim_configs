@@ -103,6 +103,8 @@ require("nvim_comment").setup {     -- toggle comments
 
 require("neoscroll").setup()
 
+require("nvim-web-devicons").setup()
+
 require("nvim-treesitter.configs").setup {
     -- language parsers that should always be installed
     ensure_installed = {
