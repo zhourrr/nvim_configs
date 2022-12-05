@@ -140,7 +140,7 @@ require('telescope').setup {            -- telescope: picker and previewer
     }
 }
 
--- install LSP servers
+-- Install LSP servers
 -- I am using mason.nvim to automatically install LSP server. Type :mason to see more details
 -- You can also install servers manually, and then add the following line in your LSP setup.
 --      cmd = { "path-to-your-language-server-executable" } 
@@ -266,6 +266,9 @@ require("gitsigns").setup {
         nmap("<Leader>p", gs.prev_hunk)
         -- preview
         nmap("<Leader>v", gs.preview_hunk)
+        -- stage and unstage
+        nmap("<Leader>s", gs.stage_hunk)
+        nmap("<Leader>u", gs.undo_stage_hunk)
     end
 }
 
@@ -336,6 +339,16 @@ nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; 
 -- H: toggle dotfiles; I: toggle git-ignore;
 -- P: go to parent node; <BackSpace>: close current opened directory
+-- Git Integration: 
+-- Icon indicates when a file is:
+--      ✗  unstaged or folder is dirty
+--      ✓  staged
+--      ★  new file
+--      ✓ ✗ partially staged
+--      ✓ ★ new file staged
+--      ✓ ★ ✗ new file staged and has unstaged modifications
+--      ═  merging
+--      ➜  renamed
 nmap("<C-b>", ":NvimTreeFindFileToggle<CR>")            -- toogle file tree
 nmap("<C-z>", ":NvimTreeCollapse<CR>")                  -- collapses the nvim-tree recursively
 
