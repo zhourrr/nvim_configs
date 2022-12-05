@@ -117,6 +117,7 @@ require("nvim-treesitter.configs").setup {
 
 require('telescope').setup {            -- telescope: picker and previewer
     defaults = {
+        sorting_strategy = "ascending", -- the direction "better" results are sorted towards
         layout_strategy = "horizontal",
         layout_config = {
             width = 0.9,                -- floating window takes up 90% of the screen
