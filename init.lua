@@ -331,6 +331,16 @@ nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; 
 -- H: toggle dotfiles; I: toggle git-ignore;
 -- P: go to parent node; <BackSpace>: close current opened directory
+-- Git Integration: 
+-- Icon indicates when a file is:
+--      ✗  unstaged or folder is dirty
+--      ✓  staged
+--      ★  new file
+--      ✓ ✗ partially staged
+--      ✓ ★ new file staged
+--      ✓ ★ ✗ new file staged and has unstaged modifications
+--      ═  merging
+--      ➜  renamed
 nmap("<C-b>", ":NvimTreeFindFileToggle<CR>")            -- toogle file tree
 nmap("<C-z>", ":NvimTreeCollapse<CR>")                  -- collapses the nvim-tree recursively
 
