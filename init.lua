@@ -339,6 +339,7 @@ nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; 
 -- H: toggle dotfiles; I: toggle git-ignore;
 -- P: go to parent node; <BackSpace>: close current opened directory
+-- c: copy file/directory; p: paste file/directory
 -- Git Integration: 
 -- Icon indicates when a file is:
 --      ✗  unstaged or folder is dirty
