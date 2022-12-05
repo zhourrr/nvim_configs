@@ -135,7 +135,7 @@ require('telescope').setup {            -- telescope: picker and previewer
     }
 }
 
--- install LSP servers
+-- Install LSP servers
 -- I am using mason.nvim to automatically install LSP server. Type :mason to see more details
 -- You can also install servers manually, and then add the following line in your LSP setup.
 --      cmd = { "path-to-your-language-server-executable" } 
