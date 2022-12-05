@@ -261,6 +261,9 @@ require("gitsigns").setup {
         nmap("<Leader>p", gs.prev_hunk)
         -- preview
         nmap("<Leader>v", gs.preview_hunk)
+        -- stage and unstage
+        nmap("<Leader>s", gs.stage_hunk)
+        nmap("<Leader>u", gs.undo_stage_hunk)
     end
 }
 
