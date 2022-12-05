@@ -122,15 +122,20 @@ require('telescope').setup {            -- telescope: picker and previewer
         sorting_strategy = "ascending", -- the direction "better" results are sorted towards
         layout_strategy = "horizontal",
         layout_config = {
-            width = 0.9,                -- floating window takes up 90% of the screen
-            preview_width = 0.5         -- preview window takes up 50% of the floating window
+            width = 0.95,               -- floating window takes up 95% of the screen
+            preview_width = 0.85        -- preview window takes up 85% of the floating window
         },
         initial_mode = "normal",        -- starts in normal mode, press i to enter insert mode
         mappings = {
             n = {
                 -- kill selected buffer in buffer picker
-                ["<Leader>k"] = require("telescope.actions").delete_buffer
+                [ "<Leader>k" ] = require("telescope.actions").delete_buffer,
+                -- toggle preview
+                [ "<Leader>m" ] = require("telescope.actions.layout").toggle_preview
             }
+        },
+        preview = {
+            hide_on_startup = true      -- hides preview window when picker starts
         }
     }
 }
