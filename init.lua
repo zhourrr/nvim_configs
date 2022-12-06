@@ -3,7 +3,7 @@
 -- <cmd>your command<CR>
 -- or
 -- <cmd>lua require('some-package-name').some-function-name({ argument list })<CR>
--- Note that <cmd> is colon and <CR> is Enter. The lua functions usually end with operator ()
+-- Note that <cmd> is colon and <CR> is Enter.
 
 
 -- disable the default file explorer
