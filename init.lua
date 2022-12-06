@@ -2,7 +2,7 @@
 -- If you want to write a command in your script, usually you can write like this:
 -- <cmd>your command<CR>
 -- or
--- <cmd>lua <some function name><CR>
+-- <cmd>lua require('some-package-name').some-function-name({ argument list }) <CR>
 -- Note that <cmd> is colon and <CR> is Enter. The lua functions usually end with operator ()
 
 
