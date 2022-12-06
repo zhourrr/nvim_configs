@@ -33,6 +33,7 @@ set noswapfile
 " special mappings
 nmap j gj
 nmap k gk
+nmap <bs> :nohlsearch<cr>     -- BackSpace clears search highlights
 vmap j gj
 vmap k gk
 nmap <C-s> <cmd>w<CR>
