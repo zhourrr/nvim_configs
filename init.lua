@@ -347,11 +347,11 @@ nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
 nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
 
 -- nvim-tree, you can actually use your mouse!
--- <Enter> open a file; <C-v> vsplit; <C-x> split; <C-]> cd into the directory
+-- <Enter> open a file; <C-v> vsplit; <C-x> split; <C-]> cd into the directory;
 -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; 
 -- H: toggle dotfiles; I: toggle git-ignore;
--- P: go to parent node; <BackSpace>: close current opened directory
--- c: copy file/directory; p: paste file/directory
+-- P: go to parent node; <BackSpace>: close current opened directory;
+-- c: copy file/directory; p: paste file/directory;
 -- Git Integration: 
 -- Icon indicates when a file is:
 --      ✗  unstaged or folder is dirty
