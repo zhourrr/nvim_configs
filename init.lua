@@ -282,7 +282,7 @@ opt.relativenumber = true
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
 opt.hlsearch = true
-nmap("<bs>", ":nohlsearch<cr>")     -- BackSpace clears search highlights
+nmap("<BS>", ":nohlsearch<CR>")     -- BackSpace clears search highlights
 opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true                -- works as case-insensitive if you only use lowercase letters;
