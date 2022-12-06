@@ -313,27 +313,39 @@ opt.swapfile = false
 -- special key mappings
 nmap("<C-s>", "<cmd>w<cr>")         -- save file
 nmap("<Leader>q", "<cmd>q<cr>")     -- quit file
+
 -- move cursor by visual lines instead of physical lines when wrapping
 nmap("j", "gj")
 nmap("k", "gk")
 vmap("j", "gj")
 vmap("k", "gk")
+
 -- Neovim terminal mode
 -- type :term to enter the terminal 
 -- type <Esc> to enter normal mode in the terminal, then you can use file explorer to switch buffers
 map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+
 -- leap
 nmap("<Leader>f", "<Plug>(leap-forward-to)")            -- easymotion forward
 nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
+
 -- telescope, t for telescope
 -- use navigation keys in telescope, such as j and k; press i to enter insert mode
 -- <C-v> vsplit, <C-x> split;
 nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
-nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")      -- searches for strings in the current working directory
-nmap("<Leader>tz", "<cmd>Telescope current_buffer_fuzzy_find<CR>")  -- fuzzy search in the current buffer
 nmap("<Leader>tb", "<cmd>Telescope buffers<CR>")        -- lists opened files (buffers)
 nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
 nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
+-- live_grep:           exact matches in the current working directory
+-- live_grep returns exact matches for the current query after each key press. Therefore it can't be fuzzy unless the
+-- grep tool provides a fuzzy engine.
+nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
+-- grep_empty_string:   fuzzy search in the current working directory
+-- grep_string returns all exact matches for the current query, then allows user to apply fuzzy filter.
+-- I use an empty string as the initial query, so essentially I am applying fuzzy filter on every line in the directory.
+-- This might be slow on large projects!
+nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
+
 -- nvim-tree, you can actually use your mouse!
 -- <Enter> open a file; <C-v> vsplit; <C-x> split; <C-]> cd into the directory
 -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; 
