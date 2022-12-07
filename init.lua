@@ -166,6 +166,8 @@ local on_attach = function(client, bufnr)                   -- has effects only 
     nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
     nmap('gr', '<cmd>Telescope lsp_references<CR>')
     nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
+    nmap('gci', '<cmd>Telescope lsp_incoming_calls<CR>')    -- call hierarchy: incoming
+    nmap('gco', '<cmd>Telescope lsp_outgoing_calls<CR>')    -- call hierarchy: outgoing
     nmap('gb', '<cmd>Telescope lsp_document_symbols<CR>')   -- list symbols in the current buffer
     nmap('gw', '<cmd>Telescope lsp_workspace_symbols<CR>')  -- list symbols in the current workspace
     nmap('ge', vim.diagnostic.open_float)                   -- print error message in a floating window
