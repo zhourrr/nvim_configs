@@ -115,6 +115,14 @@ require('lualine').setup {
         -- right refers to the right-most sections (location, etc.)
         section_separators = { left = ' ', right = ' ' },
         component_separators = { left = '|', right = '|' }
+    },
+    sections = {                    -- what components to display in each section?
+        lualine_a = { 'mode' },
+        lualine_b = { 'hostname', 'branch', 'filename' },
+        lualine_c = { 'diff', 'diagnostics', 'searchcount' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
     }
 }
 -- highlight window separators
