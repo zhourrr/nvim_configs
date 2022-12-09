@@ -57,6 +57,7 @@ require("packer").startup(function(use)             -- install plugins
     use "lukas-reineke/indent-blankline.nvim"       -- show indents
     use "terrortylor/nvim-comment"                  -- toggle comments
     use "karb94/neoscroll.nvim"                     -- smooth scroll
+    use "nvim-lualine/lualine.nvim"                 -- status line
     -- Language Server Protocol (LSP)
     use "nvim-treesitter/nvim-treesitter"           -- highlight
     use "nvim-treesitter/nvim-treesitter-context"   -- sticky scroll
@@ -104,6 +105,20 @@ require("nvim_comment").setup {     -- toggle comments
 require("neoscroll").setup()
 
 require("nvim-web-devicons").setup()
+
+require('lualine').setup {
+    options = {
+        icons_enabled = false,      -- disable icons since I don't intend to install extra fonts
+        globalstatus = true,        -- enable global statusline (only a single statusline at the bottom of neovim)
+        theme = "dracula",
+        -- left refers to the left-most sections (mode, etc.)  
+        -- right refers to the right-most sections (location, etc.)
+        section_separators = { left = ' ', right = ' ' },
+        component_separators = { left = '|', right = '|' }
+    }
+}
+-- highlight window separators
+vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'white', bold = true, bg = 'None' })
 
 require("nvim-treesitter.configs").setup {
     -- language parsers that should always be installed
@@ -210,7 +225,7 @@ cmp.setup {
                     -- keyword length controls how many characters are necessary to begin querying the source
         { name = "nvim_lsp_signature_help", keyword_length = 1, priority = 8 },
         { name = "nvim_lsp", keyword_length = 3, priority = 7 },
-        { name = "path", keyword_length = 4, priority = 1 },
+        { name = "path", keyword_length = 2, priority = 1 },
         { name = "buffer", keyword_length = 4, priority = 1 }
     },
     formatting = {  -- autocompletion menu format
@@ -292,6 +307,7 @@ opt.smartcase = true                -- works as case-insensitive if you only use
 
 -- format
 opt.cursorline = false              -- highlight the cursorline? seems not very useful
+opt.cmdheight = 0                   -- hide command line
 opt.termguicolors = true            -- true color support
 opt.wrap = true                     -- wrap very long lines to make them look like multiple lines
 opt.textwidth = 120                 -- the upper limit of the number of characters in one line
@@ -313,8 +329,10 @@ opt.wb = false
 opt.swapfile = false
 
 -- special key mappings
-nmap("<C-s>", "<cmd>w<cr>")         -- save file
-nmap("<Leader>q", "<cmd>q<cr>")     -- quit file
+nmap("<C-s>", "<cmd>w<CR>")         -- save file
+nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
+nmap("<Leader>bn", "<cmd>bn<CR>")   -- go to the next buffer
+nmap("<Leader>bp", "<cmd>bp<CR>")   -- go to the previous buffer
 
 -- move cursor by visual lines instead of physical lines when wrapping
 nmap("j", "gj")
