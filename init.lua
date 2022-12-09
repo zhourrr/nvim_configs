@@ -326,7 +326,7 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 
 -- device
-opt.mouse = "nv"                    -- applied to normal and visual mode
+opt.mouse = "a"                     -- applied to all modes
 opt.clipboard = "unnamedplus"
 
 -- display file name on the terminal title
