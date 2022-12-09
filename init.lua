@@ -279,13 +279,14 @@ require("gitsigns").setup {
     on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
         -- navigation
-        nmap("<Leader>n", gs.next_hunk)
-        nmap("<Leader>p", gs.prev_hunk)
+        nmap("<Leader>ng", gs.next_hunk)
+        nmap("<Leader>pg", gs.prev_hunk)
         -- preview
         nmap("<Leader>v", gs.preview_hunk)
-        -- stage and unstage
+        -- stage, unstage and reset
         nmap("<Leader>s", gs.stage_hunk)
         nmap("<Leader>u", gs.undo_stage_hunk)
+        nmap("<Leader>r", gs.reset_hunk)
     end
 }
 
@@ -331,8 +332,8 @@ opt.swapfile = false
 -- special key mappings
 nmap("<C-s>", "<cmd>w<CR>")         -- save file
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
-nmap("<Leader>bn", "<cmd>bn<CR>")   -- go to the next buffer
-nmap("<Leader>bp", "<cmd>bp<CR>")   -- go to the previous buffer
+nmap("<Leader>nb", "<cmd>bn<CR>")   -- go to the next buffer
+nmap("<Leader>pb", "<cmd>bp<CR>")   -- go to the previous buffer
 
 -- move cursor by visual lines instead of physical lines when wrapping
 nmap("j", "gj")
