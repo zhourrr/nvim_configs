@@ -1,6 +1,8 @@
 # Configuration Files for Vim and Neovim.
 
-I know nothing about lua language, therefore I almost commented everything in the init.lua file. The configuration is intended to be minimal and not exceed 500 lines. 
+I know nothing about lua language, therefore I almost commented everything in the init.lua file. 
+
+**_It is intended to have a minimal configuration which does not exceed 500 lines._**
 
 Copy the `init.lua` file to `~/.config/nvim/`  
 
