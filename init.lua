@@ -349,6 +349,7 @@ nmap("<C-s>", "<cmd>w<CR>")         -- save file
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
 nmap("<Leader>nb", "<cmd>bn<CR>")   -- go to the next buffer
 nmap("<Leader>pb", "<cmd>bp<CR>")   -- go to the previous buffer
+nmap("<Leader>w", "<C-w>")          -- window operations
 
 -- move cursor by visual lines instead of physical lines when wrapping
 nmap("j", "gj")
