@@ -324,6 +324,13 @@ opt.autoindent = true
 opt.expandtab = true
 opt.tabstop = 4
 opt.shiftwidth = 4
+opt.spell = true                    -- enable spell checker in comments
+opt.spelloptions = "camel"          -- be smart with camelCased words
+
+-- folding
+opt.foldmethod = "expr"             -- smart folding by tree-sitter
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldenable = false
 
 -- device
 opt.mouse = "a"                     -- applied to all modes
