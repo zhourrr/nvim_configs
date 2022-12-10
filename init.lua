@@ -324,7 +324,7 @@ opt.autoindent = true
 opt.expandtab = true
 opt.tabstop = 4
 opt.shiftwidth = 4
-opt.spell = true                    -- enable spell checker in comments, use zg and zw to mark words as good or wrong
+opt.spell = true                    -- enable spell checker in comments, use zg or zw to mark words as good or wrong
 opt.spelloptions = "camel"          -- be smart with camelCased words
 
 -- folding
