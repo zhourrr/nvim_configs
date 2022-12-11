@@ -200,6 +200,7 @@ require("mason-lspconfig").setup {
 local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
     -- lsp services
     nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
+    nmap('gD', vim.lsp.buf.declaration)
     nmap('gr', '<cmd>Telescope lsp_references<CR>')
     nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
     nmap('gci', '<cmd>Telescope lsp_incoming_calls<CR>')    -- call hierarchy: incoming
