@@ -103,7 +103,7 @@ require('nightfox').setup {
     },
     palettes = {
         nightfox = {
-            comment = "#32cd32",
+            comment = "#008000",
         }
     }
 }
