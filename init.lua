@@ -246,7 +246,7 @@ cmp.setup {
     sources = {     -- the order might affect the priority
                     -- keyword length controls how many characters are necessary to begin querying the source
         { name = "nvim_lsp_signature_help", keyword_length = 1, priority = 8 },
-        { name = "nvim_lsp", keyword_length = 3, priority = 7 },
+        { name = "nvim_lsp", keyword_length = 2, priority = 7 },
         { name = "path", keyword_length = 2, priority = 1 },
         { name = "buffer", keyword_length = 4, priority = 1 }
     },
