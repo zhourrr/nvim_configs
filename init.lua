@@ -118,7 +118,20 @@ require('lualine').setup {
     },
     sections = {                    -- what components to display in each section?
         lualine_a = { 'mode' },
-        lualine_b = { 'hostname', 'branch', 'filename' },
+        lualine_b = { 
+            'hostname', 
+            'branch',
+            { 
+                'filename',
+                path = 1, 
+                symbols = {
+                    modified = '[M]',
+                    readonly = '[R]',
+                    unnamed = '[No Name]',
+                    newfile = '[New]'
+                }
+            } 
+        },
         lualine_c = { 'diff', 'diagnostics', 'searchcount' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
