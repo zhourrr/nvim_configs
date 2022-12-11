@@ -357,6 +357,7 @@ opt.spelloptions = "camel"          -- be smart with camelCased words
 opt.foldmethod = "expr"             -- smart folding by tree-sitter
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false
+vim.api.nvim_set_hl(0, 'Folded', { fg = 'red', bold = true, bg = 'None' })  -- highlight folded
 
 -- device
 opt.mouse = "nv"                    -- applied to normal and visual modes
@@ -375,6 +376,7 @@ opt.timeoutlen = 3000               -- specify the timeout length (in millisecon
 nmap("<C-s>", "<cmd>w<CR>")         -- save file
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
 nmap("<Leader>w", "<C-w>")          -- window operations
+nmap("<Leader><Leader>", "<C-^>")   -- go to the alternate buffer
 
 -- move cursor by visual lines instead of physical lines when wrapping
 nmap("j", "gj")
@@ -395,8 +397,7 @@ nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
 -- use navigation keys in telescope, such as j and k; press i to enter insert mode
 -- <C-v> vsplit, <C-x> split;
 nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
--- lists opened files (buffers), note that CTRL-6 goes to the alternate file
-nmap("<Leader>tb", "<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<CR>")        
+nmap("<Leader>tb", "<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<CR>")   -- lists opened files
 nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
 nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- live_grep:           exact matches in the current working directory
