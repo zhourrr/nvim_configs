@@ -94,7 +94,6 @@ end)
 --
 -- plugin setup
 --
-
 require('nightfox').setup {
     options = {
         styles = {
