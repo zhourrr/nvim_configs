@@ -94,6 +94,20 @@ end)
 --
 -- plugin setup
 --
+
+require('nightfox').setup {
+    options = {
+        styles = {
+            comments = "italic"
+        }
+    },
+    palettes = {
+        nightfox = {
+            comment = "#32cd32",
+        }
+    }
+}
+
 cmd [[colorscheme nightfox]]        -- colorscheme
 
 require("nvim_comment").setup {     -- toggle comments
