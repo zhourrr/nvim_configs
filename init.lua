@@ -99,9 +99,9 @@ require('nightfox').setup {                     -- colorscheme
         styles = { comments = "italic" }
     },
     palettes = {
-        nightfox = { comment = "#00FF7F" },     -- set comment color
+        nightfox = { comment = "#00ff7f" },     -- set comment color
         dayfox = { comment = "#008000" },
-        nordfox = { comment = "#00FF7F" }
+        nordfox = { comment = "#00ff7f" }
     }
 }
 
