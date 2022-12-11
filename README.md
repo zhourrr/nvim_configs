@@ -2,7 +2,7 @@
 
 I know nothing about lua language, therefore I almost commented everything in the init.lua file. 
 
-**_It is intended to be a minimal configuration which does not exceed 500 lines._**
+**_It is intended to be a minimal configuration which involves only one file that does not exceed 500 lines._**
 
 Copy the `init.lua` file to `~/.config/nvim/`  
 
