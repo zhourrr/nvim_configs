@@ -94,16 +94,14 @@ end)
 --
 -- plugin setup
 --
-require('nightfox').setup {
+require('nightfox').setup {                     -- colorscheme
     options = {
-        styles = {
-            comments = "italic"
-        }
+        styles = { comments = "italic" }
     },
     palettes = {
-        nightfox = {
-            comment = "#008000",
-        }
+        nightfox = { comment = "#00FF7F" },     -- set comment color
+        dayfox = { comment = "#008000" },
+        nordfox = { comment = "#00FF7F" }
     }
 }
 
@@ -161,9 +159,7 @@ require("nvim-treesitter.configs").setup {
         "cpp",
         "python"
     },
-    highlight = {
-        enable = true
-    }
+    highlight = { enable = true }
 }
 
 require('telescope').setup {            -- telescope: picker and previewer
@@ -183,9 +179,12 @@ require('telescope').setup {            -- telescope: picker and previewer
                 [ "<Leader>m" ] = require("telescope.actions.layout").toggle_preview
             }
         },
-        preview = {
-            hide_on_startup = true      -- hides preview window when picker starts
-        }
+        preview = { hide_on_startup = true }            -- hides preview window when picker starts
+    },
+    pickers = {
+        find_files = { initial_mode = "insert" },       -- starts in insert mode
+        grep_string = { initial_mode = "insert" },
+        live_grep = { initial_mode = "insert" }
     }
 }
 
@@ -314,8 +313,8 @@ require("gitsigns").setup {
     on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
         -- navigation
-        nmap("<Leader>ng", gs.next_hunk)
-        nmap("<Leader>pg", gs.prev_hunk)
+        nmap("<Leader>n", gs.next_hunk)
+        nmap("<Leader>p", gs.prev_hunk)
         -- preview
         nmap("<Leader>v", gs.preview_hunk)
         -- stage, unstage and reset
@@ -342,7 +341,7 @@ opt.smartcase = true                -- works as case-insensitive if you only use
                                     -- otherwise, it will search in case-sensitive mode
 
 -- format
-opt.cursorline = false              -- highlight the cursorline? seems not very useful
+opt.cursorline = true               -- highlight the cursorline
 opt.cmdheight = 0                   -- hide command line
 opt.termguicolors = true            -- true color support
 opt.wrap = true                     -- wrap very long lines to make them look like multiple lines
@@ -360,7 +359,7 @@ opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false
 
 -- device
-opt.mouse = "a"                     -- applied to all modes
+opt.mouse = "nv"                    -- applied to normal and visual modes
 opt.clipboard = "unnamedplus"
 
 -- display file name on the terminal title
@@ -375,8 +374,6 @@ opt.swapfile = false
 opt.timeoutlen = 3000               -- specify the timeout length (in milliseconds) of mapped key sequences
 nmap("<C-s>", "<cmd>w<CR>")         -- save file
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
-nmap("<Leader>nb", "<cmd>bn<CR>")   -- go to the next buffer
-nmap("<Leader>pb", "<cmd>bp<CR>")   -- go to the previous buffer
 nmap("<Leader>w", "<C-w>")          -- window operations
 
 -- move cursor by visual lines instead of physical lines when wrapping
@@ -398,7 +395,8 @@ nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
 -- use navigation keys in telescope, such as j and k; press i to enter insert mode
 -- <C-v> vsplit, <C-x> split;
 nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
-nmap("<Leader>tb", "<cmd>Telescope buffers<CR>")        -- lists opened files (buffers)
+-- lists opened files (buffers), note that CTRL-6 goes to the alternate file
+nmap("<Leader>tb", "<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<CR>")        
 nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
 nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
 -- live_grep:           exact matches in the current working directory
