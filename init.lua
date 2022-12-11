@@ -359,6 +359,7 @@ opt.wb = false
 opt.swapfile = false
 
 -- special key mappings
+opt.timeoutlen = 3000               -- specify the timeout length (in milliseconds) of mapped key sequences
 nmap("<C-s>", "<cmd>w<CR>")         -- save file
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
 nmap("<Leader>nb", "<cmd>bn<CR>")   -- go to the next buffer
