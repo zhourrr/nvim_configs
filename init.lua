@@ -228,7 +228,7 @@ end
 
 -- configure each language server
 require("lspconfig").clangd.setup { on_attach = on_attach }
-require("lspconfig").pylsp.setup { on_attach = on_attach }
+-- require("lspconfig").pylsp.setup { on_attach = on_attach }
 
 -- set up autocompletion engine
 opt.completeopt = { "menu", "menuone", "noselect" }         -- autocompletion menu
