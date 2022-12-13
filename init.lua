@@ -408,6 +408,7 @@ nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
 -- I use an empty string as the initial query, so essentially I am applying fuzzy filter on every line in the directory.
 -- This might be slow on large projects!
 nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
+nmap("<Leader>tr", "<cmd>Telescope resume<CR>")
 
 -- nvim-tree, you can actually use your mouse!
 -- <Enter> open a file; <C-v> vsplit; <C-x> split; <C-]> cd into the directory;
