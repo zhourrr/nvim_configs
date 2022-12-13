@@ -202,8 +202,7 @@ require("mason-lspconfig").setup {
     -- language servers that should always be installed
     ensure_installed = {
         "clangd",
-        "rust_analyzer",
-        --"pyright"
+        "rust_analyzer"
     }
 }
 
@@ -229,7 +228,7 @@ end
 
 -- configure each language server
 require("lspconfig").clangd.setup { on_attach = on_attach }
-require("lspconfig").pyright.setup { on_attach = on_attach }
+require("lspconfig").pylsp.setup { on_attach = on_attach }
 
 -- set up autocompletion engine
 opt.completeopt = { "menu", "menuone", "noselect" }         -- autocompletion menu
