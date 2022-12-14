@@ -37,7 +37,7 @@ end
 -- type :Packer and see the available commands
 -- type :checkhealth to check health!
 --
-local ensure_packer = function()                -- automatically install packer
+local ensure_packer = function()                    -- automatically install packer
     local fn = vim.fn
     local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
@@ -105,7 +105,6 @@ require('nightfox').setup {                     -- colorscheme
         carbonfox = { comment = "#ffbcd9" }
     }
 }
-
 cmd [[colorscheme nightfox]]        -- colorscheme
 
 require("nvim_comment").setup {     -- toggle comments
@@ -287,17 +286,11 @@ cmp.setup {
 
 cmp.setup.cmdline({ "/", "?" }, {   -- in-file search should use source: buffer
     mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = "buffer" }
-    }
+    sources = { { name = "buffer" } }
 })
 cmp.setup.cmdline(":", {            -- commandline autocompletion uses special sources
     mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = "path" }
-    }, {
-        { name = "cmdline" }
-    })
+    sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
 })
 
 require("nvim-tree").setup {        -- file explorer, see below for mappings
@@ -338,9 +331,9 @@ opt.relativenumber = true
 
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
-opt.hlsearch = true
+opt.hlsearch = true                 -- highlight search
 nmap("<BS>", ":nohlsearch<CR>")     -- BackSpace clears search highlights
-opt.incsearch = true
+opt.incsearch = true                -- incremental search
 opt.ignorecase = true
 opt.smartcase = true                -- works as case-insensitive if you only use lowercase letters;
                                     -- otherwise, it will search in case-sensitive mode
