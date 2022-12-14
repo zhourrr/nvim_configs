@@ -19,7 +19,13 @@ Note if you have already installed Packer plugin (the plugin manager in my Neovi
 ![screenshot_6](https://user-images.githubusercontent.com/78126249/207720397-82822eef-274e-4c22-9a01-6ae86e55a324.png)
 
 
-## fuzzy search
-![screenshot_3](https://user-images.githubusercontent.com/78126249/207718827-4e79d8f7-e0ae-4d22-8f10-70289944cb17.png)
+## Fuzzy Search and Preview
+### Find Files
+![screenshot_7](https://user-images.githubusercontent.com/78126249/207732847-96d6216a-77a7-4f67-801f-e3ef82d31152.png)
 
-![screenshot_4](https://user-images.githubusercontent.com/78126249/207719228-890f1bf3-b404-4b35-b457-c8d250064d50.png)
+![screenshot_8](https://user-images.githubusercontent.com/78126249/207732877-2ead0afa-d1bd-483e-97ba-15c310536dbc.png)
+
+### Find Strings
+![screenshot_9](https://user-images.githubusercontent.com/78126249/207732884-25d0ca61-feb9-4b45-ab7a-b7fbe39d69d1.png)
+
+![screenshot_10](https://user-images.githubusercontent.com/78126249/207732657-08cd49a7-4046-416e-9f5a-b162b07230c1.png)
