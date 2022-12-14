@@ -376,7 +376,7 @@ opt.swapfile = false
 opt.timeoutlen = 3000               -- specify the timeout length (in milliseconds) of mapped key sequences
 nmap("<C-s>", "<cmd>w<CR>")         -- save file
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
-nmap("<Leader>w", "<C-w>")          -- window operations
+nmap("<Leader>w", "<C-w>")          -- window operations, note that you can type <C-w>w to switch to floating window
 nmap("<Leader><Leader>", "<C-^>")   -- go to the alternate buffer
 
 -- move cursor by visual lines instead of physical lines when wrapping
