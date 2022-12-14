@@ -172,7 +172,8 @@ require('telescope').setup {            -- telescope: picker and previewer
         layout_strategy = "horizontal",
         layout_config = {
             width = 0.95,               -- floating window takes up 95% of the screen
-            preview_width = 0.85        -- preview window takes up 85% of the floating window
+            preview_width = 0.85,       -- preview window takes up 85% of the floating window
+            preview_cutoff = 20         -- disable preview when columns are less than this value
         },
         initial_mode = "normal",        -- starts in normal mode, press i to enter insert mode
         mappings = {
@@ -431,6 +432,6 @@ nmap("<Leader>tr", "<cmd>Telescope resume<CR>")
 --      ✓ ★ ✗ new file staged and has unstaged modifications
 --      ═  merging
 --      ➜  renamed
-nmap("<C-b>", ":NvimTreeFindFileToggle<CR>")            -- toogle file tree
+nmap("<C-b>", ":NvimTreeFindFileToggle<CR>")            -- toggle file tree
 nmap("<C-z>", ":NvimTreeCollapse<CR>")                  -- collapses the nvim-tree recursively
 
