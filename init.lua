@@ -317,6 +317,7 @@ require("gitsigns").setup {
         nmap("<Leader>p", gs.prev_hunk)
         -- preview
         nmap("<Leader>v", gs.preview_hunk)
+        nmap("<Leader>l", gs.blame_line)
         -- stage, unstage and reset
         nmap("<Leader>s", gs.stage_hunk)
         nmap("<Leader>u", gs.undo_stage_hunk)
