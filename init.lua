@@ -114,7 +114,7 @@ require("nvim_comment").setup {     -- toggle comments
     operator_mapping = "<Leader>c"  -- in visual mode, comment the selected lines
 }
 
-require("neoscroll").setup()
+require("neoscroll").setup{ mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }
 
 require("nvim-web-devicons").setup()
 
@@ -151,7 +151,10 @@ require('lualine').setup {
     }
 }
 -- highlight window separators
-vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'white', bold = true, bg = 'None' })
+vim.api.nvim_create_autocmd(
+    { "BufWinEnter" },
+    { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'yellow', bg = 'None', bold = true })" }
+)
 
 require("nvim-treesitter.configs").setup {
     -- language parsers that should always be installed
