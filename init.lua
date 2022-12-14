@@ -114,7 +114,7 @@ require("nvim_comment").setup {     -- toggle comments
     operator_mapping = "<Leader>c"  -- in visual mode, comment the selected lines
 }
 
-require("neoscroll").setup{ mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }
+require("neoscroll").setup{ mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }     -- smooth these scroll operations
 
 require("nvim-web-devicons").setup()
 
