@@ -396,7 +396,7 @@ map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 nmap("<Leader>f", "<Plug>(leap-forward-to)")            -- easymotion forward
 nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
 
--- telescope, t for telescope
+-- Telescope, t for telescope
 -- use navigation keys in telescope, such as j and k; press i to enter insert mode
 -- <C-v> vsplit, <C-x> split;
 nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
@@ -413,6 +413,11 @@ nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
 -- This might be slow on large projects!
 nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
 nmap("<Leader>tr", "<cmd>Telescope resume<CR>")
+-- Telescope git integration, v for version control
+nmap("<Leader>tvc", "<cmd>Telescope git_commits<CR>")   -- git commits with diff preview, press <CR> to checkout commit
+nmap("<Leader>tvbc", "<cmd>Telescope git_bcommits<CR>") -- current buffer's git commits 
+nmap("<Leader>tvbr", "<cmd>Telescope git_branches<CR>") -- git branches
+nmap("<Leader>tvs", "<cmd>Telescope git_status<CR>")    -- git status
 
 -- nvim-tree, you can actually use your mouse!
 -- <Enter> open a file; <C-v> vsplit; <C-x> split; <C-]> cd into the directory;
