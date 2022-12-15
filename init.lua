@@ -162,8 +162,7 @@ vim.api.nvim_create_autocmd(
 )
 
 require("indent_blankline").setup {
-    show_current_context = true,
-    show_current_context_start = true
+    show_current_context = true
 }
 
 require("nvim-treesitter.configs").setup {
@@ -304,17 +303,11 @@ cmp.setup.cmdline(":", {            -- commandline autocompletion uses special s
     sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
 })
 
-require("nvim-tree").setup {        -- file explorer, see below for mappings
+require("nvim-tree").setup {                -- file explorer, see below for mappings
     sort_by = "case_sensitive",
-    view = {
-        adaptive_size = true        -- the side bar size changes as needed
-    },
-    renderer = {
-        group_empty = true
-    },
-    filters = {
-        dotfiles = true             -- hide dotfiles
-    }
+    view = { adaptive_size = true },        -- the side bar size changes as needed
+    renderer = { group_empty = true },
+    filters = { dotfiles = true }           -- hide dotfiles
 }
 
 require("gitsigns").setup {
