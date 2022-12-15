@@ -10,6 +10,12 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- disable the clipboard provider
+-- I use Windows terminal, therefore I don't need system clipboard at all. 
+-- Just enter insert mode, and use your mouse to select the content, right-click (copy) and go to wherever you want to
+-- paste it, and then press Ctrl-v as usual.
+vim.g.loaded_clipboard_provider = 0
+
 -- set up leader key
 vim.g.mapleader = " "
 
@@ -359,7 +365,6 @@ vim.api.nvim_set_hl(0, 'Folded', { fg = 'red', bold = true, bg = 'None' })  -- h
 
 -- device
 opt.mouse = "nv"                    -- applied to normal and visual modes
-opt.clipboard = "unnamedplus"
 
 -- display file name on the terminal title
 opt.title = true
