@@ -108,10 +108,11 @@ require('nightfox').setup {                     -- colorscheme
         nightfox = { comment = "#ffbcd9" },     -- set comment color
         dayfox = { comment = "#008000" },
         nordfox = { comment = "#ffbcd9" },
-        carbonfox = { comment = "#ffbcd9" }
+        terafox = { comment = "#fff36d" }
     }
 }
-cmd [[colorscheme nightfox]]        -- colorscheme
+themes = { "nightfox", "nordfox", "dayfox", "terafox" }
+vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 
 require("nvim_comment").setup {     -- toggle comments
     create_mappings = true,
