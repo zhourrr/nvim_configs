@@ -158,7 +158,7 @@ require('lualine').setup {
 -- highlight window separators
 vim.api.nvim_create_autocmd(
     { "BufWinEnter" },
-    { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'yellow', bg = 'None', bold = true })" }
+    { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None', bold = true })" }
 )
 
 require("indent_blankline").setup {
@@ -332,6 +332,7 @@ require("gitsigns").setup {
 --
 opt.number = true
 opt.relativenumber = true
+opt.scrolloff = 3                   -- minimal number of screen lines to keep above and below the cursor
 
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
