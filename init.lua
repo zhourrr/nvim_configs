@@ -59,6 +59,7 @@ local packer_bootstrap = ensure_packer()
 require("packer").startup(function(use)             -- install plugins
     use "wbthomason/packer.nvim"                    -- plugin manager
     use "EdenEast/nightfox.nvim"                    -- colorscheme
+    use { "catppuccin/nvim", as = "catppuccin" }    -- colorscheme
     use "ggandor/leap.nvim"                         -- easymotion
     use "lukas-reineke/indent-blankline.nvim"       -- show indents
     use "terrortylor/nvim-comment"                  -- toggle comments
@@ -109,6 +110,14 @@ require('nightfox').setup {                     -- colorscheme
         dayfox = { comment = "#008000" },
         nordfox = { comment = "#ffbcd9" },
         terafox = { comment = "#fff36d" }
+    }
+}
+
+require('catppuccin').setup {                   -- colorscheme
+    highlight_overrides = {
+        all = function(colors)
+            return { ["@comment"] = { fg = "#ffbcd9" } }
+        end
     }
 }
 themes = { "nightfox", "nordfox", "dayfox", "terafox" }
