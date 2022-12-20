@@ -128,7 +128,7 @@ require('lualine').setup {
     options = {
         icons_enabled = false,      -- disable icons since I don't intend to install extra fonts
         globalstatus = true,        -- enable global statusline (only a single statusline at the bottom of neovim)
-        theme = "dracula",
+        theme = "catppuccin",
         -- left refers to the left-most sections (mode, etc.)  
         -- right refers to the right-most sections (location, etc.)
         section_separators = { left = ' ', right = ' ' },
