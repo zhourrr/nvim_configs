@@ -82,12 +82,10 @@ require("packer").startup(function(use)             -- install plugins
         }
     }
     -- file explorer
+    use "nvim-lua/plenary.nvim" 
     use "nvim-tree/nvim-web-devicons"               -- file icons
     use "nvim-tree/nvim-tree.lua"
-    use {
-        "nvim-telescope/telescope.nvim",
-        requires = { "nvim-lua/plenary.nvim" }
-    }
+    use "nvim-telescope/telescope.nvim"
     use "lewis6991/gitsigns.nvim"                   -- git integration
 
     -- put this at the end after all plugins
@@ -101,27 +99,20 @@ end)
 --
 -- plugin setup
 --
-require('nightfox').setup {                     -- colorscheme
-    options = {
-        styles = { comments = "italic" }
-    },
-    palettes = {
-        nightfox = { comment = "#ffbcd9" },     -- set comment color
-        dayfox = { comment = "#008000" },
-        nordfox = { comment = "#ffbcd9" },
-        terafox = { comment = "#fff36d" }
-    }
+-- colorscheme
+require('nightfox').setup {                     
+    options = { styles = { comments = "italic" } },
+    palettes = { nightfox = { comment = "#ffbcd9" } }       -- set comment color
 }
-
-require('catppuccin').setup {                   -- colorscheme
+require('catppuccin').setup {
     highlight_overrides = {
         all = function(colors)
-            return { ["@comment"] = { fg = "#ffbcd9" } }
+            return { ["@comment"] = { fg = "#008000" } }    -- set comment color
         end
     }
 }
-themes = { "nightfox", "nordfox", "dayfox", "terafox" }
-vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
+themes = { "nightfox", "catppuccin-mocha" }
+vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 2])
 
 require("nvim_comment").setup {     -- toggle comments
     create_mappings = true,
@@ -177,11 +168,7 @@ require("indent_blankline").setup {
 
 require("nvim-treesitter.configs").setup {
     -- language parsers that should always be installed
-    ensure_installed = {
-        "c",
-        "cpp",
-        "python"
-    },
+    ensure_installed = { "c", "cpp", "python" },
     highlight = { enable = true }
 }
 
@@ -224,10 +211,7 @@ require('telescope').setup {            -- telescope: picker and previewer
 require("mason").setup()
 require("mason-lspconfig").setup {
     -- language servers that should always be installed
-    ensure_installed = {
-        "clangd",
-        "rust_analyzer"
-    }
+    ensure_installed = { "clangd", "rust_analyzer" }
 }
 
 -- set up LSP configs
