@@ -63,6 +63,7 @@ require("packer").startup(function(use)             -- install plugins
     use "ggandor/leap.nvim"                         -- easymotion
     use "lukas-reineke/indent-blankline.nvim"       -- show indents
     use "terrortylor/nvim-comment"                  -- toggle comments
+    use "windwp/nvim-autopairs"                     -- autopair
     use "karb94/neoscroll.nvim"                     -- smooth scroll
     use "nvim-lualine/lualine.nvim"                 -- status line
     -- Language Server Protocol (LSP)
@@ -118,6 +119,15 @@ require("nvim_comment").setup {     -- toggle comments
     create_mappings = true,
     line_mapping = "<Leader>cc",    -- in normal mode, comment the current line
     operator_mapping = "<Leader>c"  -- in visual mode, comment the selected lines
+}
+
+require("nvim-autopairs").setup {
+    disable_in_macro = false,   -- disable when recording or executing a macro
+    enable_moveright = true,
+    map_cr = true,              -- map <CR> key
+    map_bs = true,             	-- map <BS> key
+    map_c_h = false,           	-- map the <C-h> key to delete a pair
+    map_c_w = false           	-- map <c-w> to delete a pair if possible
 }
 
 require("neoscroll").setup{ mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }     -- smooth these scroll operations
