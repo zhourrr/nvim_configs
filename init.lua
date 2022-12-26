@@ -348,6 +348,7 @@ opt.smartcase = true                -- works as case-insensitive if you only use
                                     -- otherwise, it will search in case-sensitive mode
 
 -- format
+opt.guicursor = ""                  -- cursor shape is set by the terminal, clear default so that Neovim won't touch it
 opt.cursorline = false              -- highlight the cursorline, or not!
 opt.cmdheight = 0                   -- hide command line
 opt.termguicolors = true            -- true color support
