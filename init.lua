@@ -103,7 +103,10 @@ end)
 -- colorscheme
 require('nightfox').setup {                     
     options = { styles = { comments = "italic" } },
-    palettes = { nightfox = { comment = "#ffbcd9" } }       -- set comment color
+    palettes = {                                            -- set comment color
+        nightfox = { comment = "#ffbcd9" },
+        dayfox = { comment = "#008000" }
+    }
 }
 require('catppuccin').setup {
     highlight_overrides = {
@@ -112,8 +115,8 @@ require('catppuccin').setup {
         end
     }
 }
-themes = { "nightfox", "catppuccin-mocha" }
-vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 2])
+themes = { "nightfox", "catppuccin-mocha", "dayfox" }
+vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 3])
 
 require("nvim_comment").setup {     -- toggle comments
     create_mappings = true,
