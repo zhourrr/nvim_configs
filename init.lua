@@ -60,6 +60,7 @@ require("packer").startup(function(use)             -- install plugins
     use "wbthomason/packer.nvim"                    -- plugin manager
     use "EdenEast/nightfox.nvim"                    -- colorscheme
     use { "catppuccin/nvim", as = "catppuccin" }    -- colorscheme
+    use "sainnhe/everforest"                        -- colorscheme
     use "ggandor/leap.nvim"                         -- easymotion
     use "lukas-reineke/indent-blankline.nvim"       -- show indents
     use "terrortylor/nvim-comment"                  -- toggle comments
@@ -115,8 +116,11 @@ require('catppuccin').setup {
         end
     }
 }
-themes = { "nightfox", "catppuccin-mocha", "dayfox" }
-vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 3])
+vim.g.background = "dark"                                   -- everforest configs
+vim.g.everforest_background = "soft"
+vim.g.everforest_enable_italic = "1"
+themes = { "nightfox", "catppuccin-mocha", "dayfox", "everforest" }
+vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 
 require("nvim_comment").setup {     -- toggle comments
     create_mappings = true,
