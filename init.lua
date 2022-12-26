@@ -48,7 +48,7 @@ local ensure_packer = function()                    -- automatically install pac
     local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
         fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
+        cmd [[packadd packer.nvim]]
         return true
     end
     return false
@@ -101,7 +101,6 @@ end)
 --
 -- plugin setup
 --
--- colorscheme
 require('nightfox').setup {                     
     options = { styles = { comments = "italic" } },
     palettes = {                                            -- set comment color
@@ -119,8 +118,14 @@ require('catppuccin').setup {
 vim.g.background = "dark"                                   -- everforest configs
 vim.g.everforest_background = "soft"
 vim.g.everforest_enable_italic = "1"
+-- highlight window separators
+vim.api.nvim_create_autocmd(
+    { "ColorScheme" },
+    { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None', bold = true })" }
+)
+-- random themes
 themes = { "nightfox", "catppuccin-mocha", "dayfox", "everforest" }
-vim.cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
+cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 
 require("nvim_comment").setup {     -- toggle comments
     create_mappings = true,
@@ -129,12 +134,12 @@ require("nvim_comment").setup {     -- toggle comments
 }
 
 require("nvim-autopairs").setup {
-    disable_in_macro = false,   -- disable when recording or executing a macro
+    disable_in_macro = false,       -- disable when recording or executing a macro
     enable_moveright = true,
-    map_cr = true,              -- map <CR> key
-    map_bs = true,             	-- map <BS> key
-    map_c_h = false,           	-- map the <C-h> key to delete a pair
-    map_c_w = false           	-- map <c-w> to delete a pair if possible
+    map_cr = true,                  -- map <CR> key
+    map_bs = true,             	    -- map <BS> key
+    map_c_h = false,           	    -- map the <C-h> key to delete a pair
+    map_c_w = false           	    -- map <c-w> to delete a pair if possible
 }
 
 require("neoscroll").setup{ mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }     -- smooth these scroll operations
@@ -153,17 +158,13 @@ require('lualine').setup {
     },
     sections = {                    -- what components to display in each section?
         lualine_a = { 'mode' },
-        lualine_b = { 
-            'hostname', 
-            'branch',
-            { 
-                'filename',
-                path = 1, 
-                symbols = {
-                    modified = '[M]',
-                    readonly = '[R]',
-                    unnamed = '[No Name]',
-                    newfile = '[New]'
+        lualine_b = { 'hostname', 'branch', { 'filename',
+            path = 1, 
+            symbols = {
+                modified = '[M]',
+                readonly = '[R]',
+                unnamed = '[No Name]',
+                newfile = '[New]'
                 }
             } 
         },
@@ -173,11 +174,6 @@ require('lualine').setup {
         lualine_z = { 'location' }
     }
 }
--- highlight window separators
-vim.api.nvim_create_autocmd(
-    { "BufWinEnter" },
-    { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None', bold = true })" }
-)
 
 require("indent_blankline").setup {
     show_current_context = true
@@ -305,11 +301,11 @@ cmp.setup {
     }
 }
 
-cmp.setup.cmdline({ "/", "?" }, {   -- in-file search should use source: buffer
+cmp.setup.cmdline({ "/", "?" }, {           -- in-file search should use source: buffer
     mapping = cmp.mapping.preset.cmdline(),
     sources = { { name = "buffer" } }
 })
-cmp.setup.cmdline(":", {            -- commandline autocompletion uses special sources
+cmp.setup.cmdline(":", {                    -- commandline autocompletion uses special sources
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
 })
