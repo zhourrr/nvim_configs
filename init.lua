@@ -120,6 +120,10 @@ vim.g.everforest_background = "soft"
 vim.g.everforest_enable_italic = "1"
 -- highlight window separators
 vim.api.nvim_create_autocmd(
+   { "ColorSchemePre" },
+   { command = "set background=dark" }
+)
+vim.api.nvim_create_autocmd(
     { "ColorScheme" },
     { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None', bold = true })" }
 )
