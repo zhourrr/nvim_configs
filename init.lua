@@ -188,6 +188,15 @@ require("nvim-treesitter.configs").setup {
     ensure_installed = { "c", "cpp", "python" },
     highlight = { enable = true },
     indent = { enable = true },
+    incremental_selection = {               -- smart selection powered by treesitter
+        enable = true,
+        keymaps = {
+            init_selection = "<CR>",        -- select the area under the cursor
+            node_incremental = "<CR>",      -- increment a little bit
+            scope_incremental = "<TAB>",    -- increment a lot
+            node_decremental = "<BS>"       -- decrement a little bit
+        }
+    }
 }
 
 require('telescope').setup {            -- telescope: picker and previewer
@@ -213,7 +222,8 @@ require('telescope').setup {            -- telescope: picker and previewer
     pickers = {
         find_files = { initial_mode = "insert" },       -- starts in insert mode
         grep_string = { initial_mode = "insert" },
-        live_grep = { initial_mode = "insert" }
+        live_grep = { initial_mode = "insert" },
+        keymaps = { initial_mode = "insert" }
     }
 }
 
@@ -410,6 +420,7 @@ nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
 -- Telescope, t for telescope
 -- use navigation keys in telescope, such as j and k; press i to enter insert mode
 -- <C-v> vsplit, <C-x> split;
+nmap("<Leader>tk", "<cmd>Telescope keymaps<CR>")        -- lists key mappings
 nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
 nmap("<Leader>tb", "<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<CR>")   -- lists opened files
 nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
