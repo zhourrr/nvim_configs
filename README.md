@@ -10,10 +10,12 @@ The required plugins will be installed when you open your Neovim for the first t
 Note if you have already installed Packer plugin (the plugin manager in my Neovim), then this script will not automatically install required plugins.
 
 # Screenshots
-![Screenshot 1](https://user-images.githubusercontent.com/78126249/209617342-aa2cb05b-d6fd-4e1b-bedf-9e042871bb6e.png)
+![Screenshot 1](https://user-images.githubusercontent.com/78126249/209617548-7baa4b4a-a462-4022-b0f4-ca335f41457f.png)
 
 ## LSP and Git
-![screenshot_2](https://user-images.githubusercontent.com/78126249/207717550-a448763b-a3e5-47a1-b9fb-2f2dd3fcc760.png)
+![Screenshot 2](https://user-images.githubusercontent.com/78126249/209617871-911d0f5d-8dbb-49d9-94a1-3e13339c50a9.png)
+![Screenshot 3](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
+
 
 ![screenshot_5](https://user-images.githubusercontent.com/78126249/207720908-c0001cea-0cd0-4f61-8dd8-0b89556fa4e2.png)
 
