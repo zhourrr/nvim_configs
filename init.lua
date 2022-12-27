@@ -301,6 +301,7 @@ cmp.setup {
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
             vim_item.kind = string.format("%s", vim_item.kind)  -- what kind of object is it?
+            vim_item.abbr = string.sub(vim_item.abbr, 1, 100)   -- set up a max width on completion entries
             vim_item.menu = ({                                  -- source name
                 nvim_lsp_signature_help = "[LSP_sig]",
                 nvim_lsp = "[LSP]",
