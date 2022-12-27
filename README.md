@@ -19,8 +19,10 @@ Note if you have already installed Packer plugin (the plugin manager in my Neovi
 ![Screenshot 3](https://user-images.githubusercontent.com/78126249/209620276-b3b1bc5f-b1f1-41fa-bd53-fb40745356d3.png)
 
 ### Hover and Diagnostics
+![Screenshot 4](https://user-images.githubusercontent.com/78126249/209624149-55346f70-e4a7-4cd4-8526-f49afbb4870e.png)
 
-![screenshot_6](https://user-images.githubusercontent.com/78126249/207720397-82822eef-274e-4c22-9a01-6ae86e55a324.png)
+![Screenshot 5](https://user-images.githubusercontent.com/78126249/209623775-c9fcaaa0-3c17-40ac-a29f-f59e9c542c98.png)
+
 
 
 ## Fuzzy Search and Preview
