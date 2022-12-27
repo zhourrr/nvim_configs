@@ -186,7 +186,8 @@ require("indent_blankline").setup {
 require("nvim-treesitter.configs").setup {
     -- language parsers that should always be installed
     ensure_installed = { "c", "cpp", "python" },
-    highlight = { enable = true }
+    highlight = { enable = true },
+    indent = { enable = true },
 }
 
 require('telescope').setup {            -- telescope: picker and previewer
@@ -248,7 +249,7 @@ local on_attach = function(client, bufnr)                   -- has effects only 
     nmap('gh', vim.lsp.buf.hover)                           -- provides documentation
     nmap('gs', vim.lsp.buf.signature_help)                  -- provides documentation as you type the argument
     nmap('gf', vim.lsp.buf.format)                          -- format the current file
-    nmap('<F2>', vim.lsp.buf.rename)                        -- rename a symbol
+    nmap('gn', vim.lsp.buf.rename)                          -- rename a symbol
 end
 
 -- configure each language server
