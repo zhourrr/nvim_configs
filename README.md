@@ -10,15 +10,15 @@ The required plugins will be installed when you open your Neovim for the first t
 Note if you have already installed Packer plugin (the plugin manager in my Neovim), then this script will not automatically install required plugins.
 
 # Screenshots
-![Screenshot 1](https://user-images.githubusercontent.com/78126249/209617548-7baa4b4a-a462-4022-b0f4-ca335f41457f.png)
+![Screenshot 1](https://user-images.githubusercontent.com/78126249/209620932-6b244873-9da6-47a8-9eb3-91ce6051df0e.png)
 
 ## LSP and Git
-![Screenshot 2](https://user-images.githubusercontent.com/78126249/209617871-911d0f5d-8dbb-49d9-94a1-3e13339c50a9.png)
-
 ### Auto-Completion
-![Screenshot 3](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
+![Screenshot 2](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
 
-![Screenshot 4](https://user-images.githubusercontent.com/78126249/209620276-b3b1bc5f-b1f1-41fa-bd53-fb40745356d3.png)
+![Screenshot 3](https://user-images.githubusercontent.com/78126249/209620276-b3b1bc5f-b1f1-41fa-bd53-fb40745356d3.png)
+
+### Hover and Diagnostics
 
 ![screenshot_6](https://user-images.githubusercontent.com/78126249/207720397-82822eef-274e-4c22-9a01-6ae86e55a324.png)
 
