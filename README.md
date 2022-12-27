@@ -15,7 +15,11 @@ Note if you have already installed Packer plugin (the plugin manager in my Neovi
 ## LSP and Git
 ![Screenshot 2](https://user-images.githubusercontent.com/78126249/209617871-911d0f5d-8dbb-49d9-94a1-3e13339c50a9.png)
 
+### Auto-Completion
 ![Screenshot 3](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
+
+![Screenshot 4](https://user-images.githubusercontent.com/78126249/209620276-b3b1bc5f-b1f1-41fa-bd53-fb40745356d3.png)
+
 
 
 ![screenshot_5](https://user-images.githubusercontent.com/78126249/207720908-c0001cea-0cd0-4f61-8dd8-0b89556fa4e2.png)
