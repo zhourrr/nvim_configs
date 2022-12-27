@@ -12,7 +12,7 @@ Note if you have already installed Packer plugin (the plugin manager in my Neovi
 # Screenshots
 ![Screenshot 1](https://user-images.githubusercontent.com/78126249/209620932-6b244873-9da6-47a8-9eb3-91ce6051df0e.png)
 
-## LSP (go-to definition/declaration/reference/type definition)
+## LSP (go to definition/declaration/reference/type definition)
 ### Auto-Completion
 ![Screenshot 2](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
 
