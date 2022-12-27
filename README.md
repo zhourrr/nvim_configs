@@ -20,10 +20,6 @@ Note if you have already installed Packer plugin (the plugin manager in my Neovi
 
 ![Screenshot 4](https://user-images.githubusercontent.com/78126249/209620276-b3b1bc5f-b1f1-41fa-bd53-fb40745356d3.png)
 
-
-
-![screenshot_5](https://user-images.githubusercontent.com/78126249/207720908-c0001cea-0cd0-4f61-8dd8-0b89556fa4e2.png)
-
 ![screenshot_6](https://user-images.githubusercontent.com/78126249/207720397-82822eef-274e-4c22-9a01-6ae86e55a324.png)
 
 
