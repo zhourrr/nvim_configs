@@ -14,6 +14,7 @@ Note if you have already installed Packer plugin (the plugin manager in my Neovi
 
 ## LSP and Git
 ![Screenshot 2](https://user-images.githubusercontent.com/78126249/209617871-911d0f5d-8dbb-49d9-94a1-3e13339c50a9.png)
+
 ![Screenshot 3](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
 
 
