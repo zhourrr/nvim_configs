@@ -152,7 +152,7 @@ require("nvim-web-devicons").setup()
 
 require('lualine').setup {
     options = {
-        icons_enabled = false,      -- disable icons since I don't intend to install extra fonts
+        icons_enabled = true,
         globalstatus = true,        -- enable global statusline (only a single statusline at the bottom of neovim)
         theme = "catppuccin",
         -- left refers to the left-most sections (mode, etc.)  
