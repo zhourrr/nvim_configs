@@ -262,6 +262,10 @@ local on_attach = function(client, bufnr)                   -- has effects only 
     nmap('gn', vim.lsp.buf.rename)                          -- rename a symbol
 end
 
+-- set up LSP floating window border
+vim.diagnostic.config{ float = { border = "single" } }
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
 -- configure each language server
 require("lspconfig").clangd.setup { on_attach = on_attach }
 -- require("lspconfig").pylsp.setup { on_attach = on_attach }
