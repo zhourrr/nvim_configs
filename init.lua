@@ -416,7 +416,7 @@ require("lazy").setup {
     },
     {   -- autocompletion engine
         "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
+        event = { "InsertEnter", "CmdlineEnter" },
         dependencies = {        -- autocompletion sources
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lsp-signature-help",
