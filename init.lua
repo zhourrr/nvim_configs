@@ -342,6 +342,7 @@ require("lazy").setup {
         "lewis6991/gitsigns.nvim",
         event = "BufReadPost",
         config = {
+            preview_config = { border = "rounded" },
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
                 -- navigation
@@ -349,7 +350,7 @@ require("lazy").setup {
                 nmap("<Leader>p", gs.prev_hunk)
                 -- preview
                 nmap("<Leader>v", gs.preview_hunk)
-                nmap("<Leader>l", gs.blame_line)
+                nmap("<Leader>l", gs.blame_line)        -- the last person who touched this line
                 -- stage, unstage and reset
                 nmap("<Leader>s", gs.stage_hunk)
                 nmap("<Leader>u", gs.undo_stage_hunk)
