@@ -176,9 +176,9 @@ require("lazy").setup {
         end
     },
     {   -- show indents
-        "lukas-reineke/indent-blankline.nvim",
+        "echasnovski/mini.indentscope",
         event = "BufReadPost",
-        config = { show_current_context = true }
+        config = function() require("mini.indentscope").setup{ symbol = "│" } end
     },
     {   -- status line
         "nvim-lualine/lualine.nvim",
