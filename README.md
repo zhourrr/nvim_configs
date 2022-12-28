@@ -5,9 +5,7 @@ I know nothing about lua language, therefore I almost commented everything in th
 It is **_intended to be a minimal configuration which involves only one file that does not exceed 500 lines._**
 
 Copy the `init.lua` file to `~/.config/nvim/`  
-The required plugins will be installed when you open your Neovim for the first time, so probably it will print some error messages since the plugins are not available (according to my setup order, it should echo something similar to "colorscheme not found error"). After you reopen Neovim, everything should work.
-
-Note if you have already installed Packer plugin (the plugin manager in my Neovim), then this script will not automatically install required plugins.
+The required plugins will be installed when you open your Neovim for the first time. I use lazy.nvim as my plugin manager, so everything should work smoothly.
 
 # Screenshots
 ![Screenshot 1](https://user-images.githubusercontent.com/78126249/209620932-6b244873-9da6-47a8-9eb3-91ce6051df0e.png)
@@ -36,3 +34,7 @@ Note if you have already installed Packer plugin (the plugin manager in my Neovi
 ![screenshot_9](https://user-images.githubusercontent.com/78126249/207732884-25d0ca61-feb9-4b45-ab7a-b7fbe39d69d1.png)
 
 ![screenshot_10](https://user-images.githubusercontent.com/78126249/207732657-08cd49a7-4046-416e-9f5a-b162b07230c1.png)
+
+## Git
+![Screenshot 11](https://user-images.githubusercontent.com/78126249/209765272-57d87626-4d4f-48ad-b12a-80ef614fcd56.png)
+
