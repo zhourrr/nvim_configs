@@ -118,7 +118,7 @@ opt.runtimepath:prepend(lazypath)
 -- keys:    lazy-load on key mappings
 -- event:   lazy-load on event
 -- cmd:     lazy-load on command
--- config:  passed to plugin setup
+-- config:  a custom setup function or arguments passed to the default plugin setup function
 --
 require("lazy").setup {
     --
