@@ -97,7 +97,7 @@ map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
 
 --
--- load plugins via Lazy
+-- load plugins via Lazy, type :Lazy to see available commands
 --
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -386,9 +386,9 @@ require("lazy").setup {
         event = "VeryLazy",
         config = function()
             -- set up LSP floating window border
-            vim.diagnostic.config{ float = { border = "single" } }
-            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
-            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
+            vim.diagnostic.config{ float = { border = "rounded" } }
+            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
             -- LSP services
             local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
                 nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
@@ -485,16 +485,13 @@ require("lazy").setup {
     }
 }
 
-
-nmap("<Leader>1", "<cmd>Lazy<CR>")
-
 -- highlight window separators
 vim.api.nvim_create_autocmd(
     { "ColorScheme" },
     { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None', bold = true })" }
 )
+
 -- random themes
 themes = { "nightfox", "catppuccin-mocha", "dayfox", "everforest" }
-cmd("colorscheme nightfox")
--- cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
+cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 
