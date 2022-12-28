@@ -50,7 +50,7 @@ opt.scrolloff = 3                   -- minimal number of screen lines to keep ab
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
 opt.hlsearch = true                 -- highlight search
-nmap("<BS>", "<cmd>nohlsearch<CR>")     -- BackSpace clears search highlights
+nmap("<BS>", "<cmd>nohlsearch<CR>") -- BackSpace clears search highlights
 opt.incsearch = true                -- incremental search
 opt.ignorecase = true
 opt.smartcase = true                -- works as case-insensitive if you only use lowercase letters;
