@@ -370,7 +370,7 @@ require("lazy").setup {
         event = "VeryLazy",
         config = {
             -- language servers that should always be installed
-            ensure_installed = { "clangd", "rust_analyzer" }
+            -- ensure_installed = { "clangd", "rust_analyzer" }
         }
     },
     {   -- Nvim LSP client configs. Type :lsp to see available commands, such as LspInfo
@@ -407,7 +407,10 @@ require("lazy").setup {
                 nmap('gn', vim.lsp.buf.rename)                          -- rename a symbol
             end
             -- configure each language server
-            require("lspconfig").clangd.setup { on_attach = on_attach }
+            require("lspconfig").clangd.setup {
+                cmd = { "/home/qinren/.local/lsp/clangd/bin/clangd" }, 
+                on_attach = on_attach 
+            }
             -- require("lspconfig").pylsp.setup { on_attach = on_attach }
         end
     },
