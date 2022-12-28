@@ -243,7 +243,7 @@ require("lazy").setup {
     },
     {   -- auto-pair
         "windwp/nvim-autopairs",
-        event = "BufReadPost",
+        event = "InsertEnter",
         config = {
             disable_in_macro = false,       -- disable when recording or executing a macro
             enable_moveright = true,
@@ -255,7 +255,7 @@ require("lazy").setup {
     },
     {   -- picker and previewer
         "nvim-telescope/telescope.nvim",
-        keys = { "<Leader>t", "g" },
+        event = "BufReadPost",
         config = function()
             require("telescope").setup {
                 defaults = {
@@ -338,6 +338,25 @@ require("lazy").setup {
         event = "BufReadPost",
         config = true
     },
+    {   -- git integration
+        "lewis6991/gitsigns.nvim",
+        event = "BufReadPost",
+        config = {
+            on_attach = function(bufnr)
+                local gs = package.loaded.gitsigns
+                -- navigation
+                nmap("<Leader>n", gs.next_hunk)
+                nmap("<Leader>p", gs.prev_hunk)
+                -- preview
+                nmap("<Leader>v", gs.preview_hunk)
+                nmap("<Leader>l", gs.blame_line)
+                -- stage, unstage and reset
+                nmap("<Leader>s", gs.stage_hunk)
+                nmap("<Leader>u", gs.undo_stage_hunk)
+                nmap("<Leader>r", gs.reset_hunk)
+            end
+        }
+    },
     -- 
     -- Language Server Protocol (LSP)
     --
@@ -366,6 +385,11 @@ require("lazy").setup {
         "neovim/nvim-lspconfig",
         event = "VeryLazy",
         config = function()
+            -- set up LSP floating window border
+            vim.diagnostic.config{ float = { border = "single" } }
+            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
+            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
+            -- LSP services
             local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
                 nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
                 nmap('gD', vim.lsp.buf.declaration)
@@ -382,12 +406,84 @@ require("lazy").setup {
                 nmap('gf', vim.lsp.buf.format)                          -- format the current file
                 nmap('gn', vim.lsp.buf.rename)                          -- rename a symbol
             end
+            -- configure each language server
+            require("lspconfig").clangd.setup { on_attach = on_attach }
+            -- require("lspconfig").pylsp.setup { on_attach = on_attach }
+        end
+    },
+    {   -- autocompletion engine
+        "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
+        dependencies = {        -- autocompletion sources
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+        },
+        config = function()     -- set up autocompletion engine
+            opt.completeopt = { "menu", "menuone", "noselect" }         -- autocompletion menu
+            local cmp = require("cmp")
+            local select_opts = { behavior = cmp.SelectBehavior.Select }
+            local has_chars_before = function()                         -- check if there is something before the current cursor
+                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            end
+            cmp.setup {
+                mapping = {
+                    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+                    ["<Up>"] = cmp.mapping.select_prev_item(select_opts),
+                    ["<Down>"] = cmp.mapping.select_next_item(select_opts),
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then                       -- tab scrolls down
+                            cmp.select_next_item(select_opts)
+                        elseif has_chars_before() then
+                            cmp.complete()
+                        else
+                            fallback()                              -- don't complete for an empty word
+                        end
+                    end, { "i", "c" })                              -- applied to insert and command mode
+                },
+                sources = {     -- the order might affect the priority
+                                -- keyword length controls how many characters are necessary to begin querying the source
+                    { name = "nvim_lsp_signature_help", keyword_length = 1, priority = 8 },
+                    { name = "nvim_lsp", keyword_length = 2, priority = 7 },
+                    { name = "path", keyword_length = 2, priority = 1 },
+                    { name = "buffer", keyword_length = 4, priority = 1 }
+                },
+                formatting = {  -- autocompletion menu format
+                    fields = { "kind", "abbr", "menu" },
+                    format = function(entry, vim_item)
+                        vim_item.kind = string.format("%s", vim_item.kind)  -- what kind of object is it?
+                        vim_item.abbr = string.sub(vim_item.abbr, 1, 100)   -- set up a max width on completion entries
+                        vim_item.menu = ({                                  -- source name
+                            nvim_lsp_signature_help = "[LSP_sig]",
+                            nvim_lsp = "[LSP]",
+                            buffer = "[Buffer]",
+                            path = "[Path]"
+                        })[entry.source.name]
+                        return vim_item
+                    end
+                },
+                window = {      -- I like borders...
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered()
+                }
+            }
+            cmp.setup.cmdline({ "/", "?" }, {           -- in-file search should use source: buffer
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = { { name = "buffer" } }
+            })
+            cmp.setup.cmdline(":", {                    -- commandline autocompletion uses special sources
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
+            })
         end
     }
 }
 
 
-nmap("<Leader>l", "<cmd>Lazy<CR>")
+nmap("<Leader>1", "<cmd>Lazy<CR>")
 
 -- highlight window separators
 vim.api.nvim_create_autocmd(
@@ -398,105 +494,4 @@ vim.api.nvim_create_autocmd(
 themes = { "nightfox", "catppuccin-mocha", "dayfox", "everforest" }
 cmd("colorscheme nightfox")
 -- cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
-
-
---    use {
---        "hrsh7th/nvim-cmp",                         -- autocompletion engine
---        requires = {                                -- autocompletion sources
---            "hrsh7th/cmp-nvim-lsp",
---            "hrsh7th/cmp-nvim-lsp-signature-help",
---            "hrsh7th/cmp-buffer",
---            "hrsh7th/cmp-path",
---            "hrsh7th/cmp-cmdline"
---        }
---    }
---    -- file explorer
---    use "lewis6991/gitsigns.nvim"                   -- git integration
---
-
-
---
----- set up LSP floating window border
---vim.diagnostic.config{ float = { border = "single" } }
---vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
---vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
----- configure each language server
---require("lspconfig").clangd.setup { on_attach = on_attach }
----- require("lspconfig").pylsp.setup { on_attach = on_attach }
---
----- set up autocompletion engine
---opt.completeopt = { "menu", "menuone", "noselect" }         -- autocompletion menu
---local cmp = require("cmp")
---local select_opts = { behavior = cmp.SelectBehavior.Select }
---local has_words_before = function()                         -- check if there is a word before the current cursor
---    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
---    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
---end
---
---cmp.setup {
---    mapping = {
---        ["<CR>"] = cmp.mapping.confirm({ select = false }),
---        ["<Up>"] = cmp.mapping.select_prev_item(select_opts),
---        ["<Down>"] = cmp.mapping.select_next_item(select_opts),
---        ["<Tab>"] = cmp.mapping(function(fallback)
---            if cmp.visible() then                       -- tab scrolls down
---                cmp.select_next_item(select_opts)
---            elseif has_words_before() then
---                cmp.complete()
---            else
---                fallback()                              -- don't complete for an empty word
---            end
---        end, { "i", "c" })                              -- applied to insert and command mode
---    },
---    sources = {     -- the order might affect the priority
---                    -- keyword length controls how many characters are necessary to begin querying the source
---        { name = "nvim_lsp_signature_help", keyword_length = 1, priority = 8 },
---        { name = "nvim_lsp", keyword_length = 2, priority = 7 },
---        { name = "path", keyword_length = 2, priority = 1 },
---        { name = "buffer", keyword_length = 4, priority = 1 }
---    },
---    formatting = {  -- autocompletion menu format
---        fields = { "kind", "abbr", "menu" },
---        format = function(entry, vim_item)
---            vim_item.kind = string.format("%s", vim_item.kind)  -- what kind of object is it?
---            vim_item.abbr = string.sub(vim_item.abbr, 1, 100)   -- set up a max width on completion entries
---            vim_item.menu = ({                                  -- source name
---                nvim_lsp_signature_help = "[LSP_sig]",
---                nvim_lsp = "[LSP]",
---                buffer = "[Buffer]",
---                path = "[Path]"
---            })[entry.source.name]
---            return vim_item
---        end
---    },
---    window = {      -- I like borders...
---        completion = cmp.config.window.bordered(),
---        documentation = cmp.config.window.bordered()
---    }
---}
---
---cmp.setup.cmdline({ "/", "?" }, {           -- in-file search should use source: buffer
---    mapping = cmp.mapping.preset.cmdline(),
---    sources = { { name = "buffer" } }
---})
---cmp.setup.cmdline(":", {                    -- commandline autocompletion uses special sources
---    mapping = cmp.mapping.preset.cmdline(),
---    sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
---})
---
---require("gitsigns").setup {
---    on_attach = function(bufnr)
---        local gs = package.loaded.gitsigns
---        -- navigation
---        nmap("<Leader>n", gs.next_hunk)
---        nmap("<Leader>p", gs.prev_hunk)
---        -- preview
---        nmap("<Leader>v", gs.preview_hunk)
---        nmap("<Leader>l", gs.blame_line)
---        -- stage, unstage and reset
---        nmap("<Leader>s", gs.stage_hunk)
---        nmap("<Leader>u", gs.undo_stage_hunk)
---        nmap("<Leader>r", gs.reset_hunk)
---    end
---}
 
