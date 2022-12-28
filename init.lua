@@ -13,8 +13,8 @@ vim.g.loaded_netrwPlugin = 1
 
 -- disable the clipboard provider
 -- I use Windows terminal, therefore I don't need system clipboard at all. 
--- Just enter insert mode, and use your mouse to select the content, right-click (copy) and go to wherever you want to
--- paste it, and then press Ctrl-v as usual.
+-- Just enter insert mode, and use your mouse to select the content, right-click (copy) 
+-- and go to wherever you want to paste it, and then press Ctrl-v as usual.
 vim.g.loaded_clipboard_provider = 0
 
 -- set up leader key
@@ -41,6 +41,62 @@ end
 
 
 --
+-- general configurations
+--
+opt.number = true
+opt.relativenumber = true
+opt.scrolloff = 3                   -- minimal number of screen lines to keep above and below the cursor
+
+-- search
+opt.showmatch = true                -- show matching brackets when text indicator is over them
+opt.hlsearch = true                 -- highlight search
+nmap("<BS>", ":nohlsearch<CR>")     -- BackSpace clears search highlights
+opt.incsearch = true                -- incremental search
+opt.ignorecase = true
+opt.smartcase = true                -- works as case-insensitive if you only use lowercase letters;
+                                    -- otherwise, it will search in case-sensitive mode
+
+-- format
+opt.cursorline = false              -- highlight the cursorline, or not!
+opt.cmdheight = 0                   -- hide command line
+opt.termguicolors = true            -- true color support
+opt.wrap = true                     -- wrap very long lines to make them look like multiple lines
+opt.textwidth = 120                 -- the upper limit of the number of characters in one line
+opt.autoindent = true
+opt.expandtab = true
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.spell = false                   -- enable spell checker in comments, use zg or zw to mark words as good or wrong
+opt.spelloptions = "camel"          -- be smart with camelCased words
+
+-- device
+opt.mouse = "nv"                    -- applied to normal and visual modes
+
+-- turn backup off, since most stuff is in Git or something else anyway...
+opt.backup = false
+opt.wb = false
+opt.swapfile = false
+
+-- special key mappings
+opt.timeoutlen = 3000               -- specify the timeout length (in milliseconds) of mapped key sequences
+nmap("<C-s>", "<cmd>update<CR>")    -- save changes
+nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
+nmap("<Leader>w", "<C-w>")          -- window operations, note that you can type <C-w>w to switch to floating window
+nmap("<Leader><Leader>", "<C-^>")   -- go to the alternate buffer
+
+-- move cursor by visual lines instead of physical lines when wrapping
+nmap("j", "gj")
+nmap("k", "gk")
+vmap("j", "gj")
+vmap("k", "gk")
+
+-- Neovim terminal mode
+-- type :term to enter the terminal 
+-- type <Esc> to enter normal mode in the terminal, then you can use file explorer to switch buffers
+map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+
+
+--
 -- load plugins via Lazy
 --
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -56,11 +112,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 opt.runtimepath:prepend(lazypath)
 
+--
 -- name:    a custom name for the plugin used for the local plugin directory
 -- lazy:    lazy-load or not? the default is false
 -- keys:    lazy-load on key mappings
--- event:   lazy-load on events
+-- event:   lazy-load on event
+-- cmd:     lazy-load on command
 -- config:  passed to plugin setup
+--
 require("lazy").setup {
     --
     -- UI
@@ -75,10 +134,8 @@ require("lazy").setup {
     {   -- color scheme
         "catppuccin/nvim",
         name = "catppuccin",
-        config = {
-            highlight_overrides = { -- set comment color
-                all = function(colors) return { [ "@comment" ] = { fg = "#008000" } } end
-            }
+        config = {  -- set comment color
+            highlight_overrides = { all = function(colors) return { [ "@comment" ] = { fg = "#008000" } } end }
         }
     },
     {   -- color scheme
@@ -86,10 +143,7 @@ require("lazy").setup {
         config = function()
             vim.g.everforest_background = "soft"
             vim.g.everforest_enable_italic = "1"
-            vim.api.nvim_create_autocmd(
-                { "ColorSchemePre" },
-                { command = "set background=dark" }
-            )
+            vim.api.nvim_create_autocmd( { "ColorSchemePre" }, { command = "set background=dark" } )
         end
     },
     {   -- file explorer
@@ -126,53 +180,6 @@ require("lazy").setup {
         event = "BufReadPost",
         config = { show_current_context = true }
     },
-    -- 
-    -- dependency
-    --
-    {
-        "nvim-lua/plenary.nvim", 
-    },
-    {   -- file icons
-        "nvim-tree/nvim-web-devicons",
-    },
-    --
-    -- utility
-    --
-    {   -- toggle comments
-        "terrortylor/nvim-comment",
-        name = "nvim_comment",
-        event = "VeryLazy",
-        config = {
-            create_mappings = true,
-            line_mapping = "<Leader>cc",    -- in normal mode, comment the current line
-            operator_mapping = "<Leader>c"  -- in visual mode, comment the selected lines
-        }
-    },
-    {   -- easymotion
-        "ggandor/leap.nvim",
-        event = "VeryLazy",
-        config = function()
-            nmap("<Leader>f", "<Plug>(leap-forward-to)")    -- easymotion forward
-            nmap("<Leader>b", "<Plug>(leap-backward-to)")   -- easymotion backward
-        end
-    },
-    {   -- smooth scroll
-        "karb94/neoscroll.nvim",
-        keys = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' },
-        config = { mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }  -- smooth these scroll operations
-    },
-    {   -- autopair
-        "windwp/nvim-autopairs",
-        event = "VeryLazy",
-        config = {
-            disable_in_macro = false,       -- disable when recording or executing a macro
-            enable_moveright = true,
-            map_cr = true,                  -- map <CR> key
-            map_bs = true,             	    -- map <BS> key
-            map_c_h = false,           	    -- map the <C-h> key to delete a pair
-            map_c_w = false           	    -- map <c-w> to delete a pair if possible
-        }
-    },
     {   -- status line
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
@@ -204,9 +211,104 @@ require("lazy").setup {
         }
     },
     -- 
-    -- Language Server Protocol (LSP)
+    -- dependency
     --
-    {   -- highlight
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-tree/nvim-web-devicons", config = true },   -- file icons
+    --
+    -- utility
+    --
+    {   -- toggle comments
+        "terrortylor/nvim-comment",
+        name = "nvim_comment",
+        keys = { { "<Leader>c", mode = "n" }, { "<Leader>c", mode = "v" } },
+        config = {
+            create_mappings = true,
+            line_mapping = "<Leader>cc",    -- in normal mode, comment the current line
+            operator_mapping = "<Leader>c"  -- in visual mode, comment the selected lines
+        }
+    },
+    {   -- easymotion
+        "ggandor/leap.nvim",
+        keys = { "<Leader>f", "<Leader>b" },
+        config = function()
+            nmap("<Leader>f", "<Plug>(leap-forward-to)")    -- easymotion forward
+            nmap("<Leader>b", "<Plug>(leap-backward-to)")   -- easymotion backward
+        end
+    },
+    {   -- smooth scroll
+        "karb94/neoscroll.nvim",
+        keys = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' },
+        config = { mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }  -- smooth these scroll operations
+    },
+    {   -- auto-pair
+        "windwp/nvim-autopairs",
+        event = "BufReadPost",
+        config = {
+            disable_in_macro = false,       -- disable when recording or executing a macro
+            enable_moveright = true,
+            map_cr = true,                  -- map <CR> key
+            map_bs = true,             	    -- map <BS> key
+            map_c_h = false,           	    -- map the <C-h> key to delete a pair
+            map_c_w = false           	    -- map <c-w> to delete a pair if possible
+        }
+    },
+    {   -- picker and previewer
+        "nvim-telescope/telescope.nvim",
+        keys = { "<Leader>t", "g" },
+        config = function()
+            require("telescope").setup {
+                defaults = {
+                    sorting_strategy = "ascending", -- the direction "better" results are sorted towards
+                    layout_strategy = "horizontal",
+                    layout_config = {
+                        width = 0.95,               -- floating window takes up 95% of the screen
+                        preview_width = 0.85,       -- preview window takes up 85% of the floating window
+                        preview_cutoff = 20         -- disable preview when columns are less than this value
+                    },
+                    initial_mode = "normal",        -- starts in normal mode, press i to enter insert mode
+                    mappings = {
+                        n = {
+                            -- kill selected buffer in buffer picker
+                            [ "<Leader>k" ] = require("telescope.actions").delete_buffer,
+                            -- toggle preview
+                            [ "<Leader>m" ] = require("telescope.actions.layout").toggle_preview
+                        }
+                    },
+                    preview = { hide_on_startup = true }            -- hides preview window when picker starts
+                },
+                pickers = {
+                    find_files = { initial_mode = "insert" },       -- starts in insert mode
+                    grep_string = { initial_mode = "insert" },
+                    live_grep = { initial_mode = "insert" },
+                    keymaps = { initial_mode = "insert" }
+                }
+            }
+            -- t for telescope; use navigation keys in telescope, such as j, k, <C-d> and <C-u>. 
+            -- <C-v> vsplit, <C-x> split;
+            nmap("<Leader>tk", "<cmd>Telescope keymaps<CR>")        -- lists key mappings
+            nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
+            nmap("<Leader>tb", "<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<CR>")   -- lists opened files
+            nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
+            nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
+            -- live_grep:           exact matches in the current working directory
+            -- live_grep returns exact matches for the current query after each key press. Therefore it can't be fuzzy 
+            -- unless the grep tool provides a fuzzy engine.
+            nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
+            -- grep_empty_string:   fuzzy search in the current working directory
+            -- grep_string returns all exact matches for the current query, then allows user to apply fuzzy filter.
+            -- I use an empty string as the initial query, so essentially I am applying fuzzy filter on every line in the directory.
+            -- This might be slow on large projects!
+            nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
+            nmap("<Leader>tr", "<cmd>Telescope resume<CR>")
+            -- Telescope git integration, v for version control
+            nmap("<Leader>tvc", "<cmd>Telescope git_commits<CR>")   -- git commits with diff preview, press <CR> to checkout commit
+            nmap("<Leader>tvbc", "<cmd>Telescope git_bcommits<CR>") -- current buffer's git commits 
+            nmap("<Leader>tvbr", "<cmd>Telescope git_branches<CR>") -- git branches
+            nmap("<Leader>tvs", "<cmd>Telescope git_status<CR>")    -- git status
+        end
+    },
+    {   -- language parser and highlighter
         "nvim-treesitter/nvim-treesitter",
         event = "BufReadPost",
         config = function()
@@ -225,14 +327,66 @@ require("lazy").setup {
                     }
                 }
             }
+            opt.foldmethod = "expr"                     -- smart folding powered by tree-sitter
+            opt.foldexpr = "nvim_treesitter#foldexpr()"
+            opt.foldenable = false
+            vim.api.nvim_set_hl(0, 'Folded', { fg = 'red', bold = true, bg = 'None' }) 	-- highlight folded
         end
     },
     {   -- sticky scroll
         "nvim-treesitter/nvim-treesitter-context",
         event = "BufReadPost",
         config = true
+    },
+    -- 
+    -- Language Server Protocol (LSP)
+    --
+    {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
+        "williamboman/mason.nvim",
+        event = "VeryLazy",
+        config = { ui = { icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } } }
+    },
+    {   -- helper for mason.nvim
+        "williamboman/mason-lspconfig.nvim",
+        event = "VeryLazy",
+        config = {
+            -- language servers that should always be installed
+            ensure_installed = { "clangd", "rust_analyzer" }
+        }
+    },
+    {   -- Nvim LSP client configs. Type :lsp to see available commands, such as LspInfo
+        -- I use mason to install servers. 
+        -- You can also install servers manually, and then add the following line in your LSP setup.
+        --      cmd = { "path-to-your-language-server-executable" } 
+        --      Example:
+        --          require("lspconfig").clangd.setup {
+        --              cmd = { "path-to-your-clangd-server-executable" },
+        --              on_attach = on_attach
+        --          }
+        "neovim/nvim-lspconfig",
+        event = "VeryLazy",
+        config = function()
+            local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
+                nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
+                nmap('gD', vim.lsp.buf.declaration)
+                nmap('gr', '<cmd>Telescope lsp_references<CR>')
+                nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
+                nmap('gci', '<cmd>Telescope lsp_incoming_calls<CR>')    -- call hierarchy: incoming
+                nmap('gco', '<cmd>Telescope lsp_outgoing_calls<CR>')    -- call hierarchy: outgoing
+                nmap('gb', '<cmd>Telescope lsp_document_symbols<CR>')   -- list symbols in the current buffer
+                nmap('gw', '<cmd>Telescope lsp_workspace_symbols<CR>')  -- list symbols in the current workspace
+                nmap('ge', vim.diagnostic.open_float)                   -- print error message in a floating window
+                nmap('ga', vim.lsp.buf.code_action)                     -- code actions, such as quick fixes
+                nmap('gh', vim.lsp.buf.hover)                           -- provides documentation
+                nmap('gs', vim.lsp.buf.signature_help)                  -- provides documentation about the arguments
+                nmap('gf', vim.lsp.buf.format)                          -- format the current file
+                nmap('gn', vim.lsp.buf.rename)                          -- rename a symbol
+            end
+        end
     }
 }
+
+
 nmap("<Leader>l", "<cmd>Lazy<CR>")
 
 -- highlight window separators
@@ -246,9 +400,6 @@ cmd("colorscheme nightfox")
 -- cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 
 
---    use "williamboman/mason.nvim"                   -- LSP servers manager
---    use "williamboman/mason-lspconfig.nvim"         -- helper for mason.nvim
---    use "neovim/nvim-lspconfig"                     -- Nvim LSP client configs
 --    use {
 --        "hrsh7th/nvim-cmp",                         -- autocompletion engine
 --        requires = {                                -- autocompletion sources
@@ -260,80 +411,10 @@ cmd("colorscheme nightfox")
 --        }
 --    }
 --    -- file explorer
---    use "nvim-telescope/telescope.nvim"
 --    use "lewis6991/gitsigns.nvim"                   -- git integration
 --
 
---
--- plugin setup
---
---require("nvim-web-devicons").setup()
---
---
---
---
---require('telescope').setup {            -- telescope: picker and previewer
---    defaults = {
---        sorting_strategy = "ascending", -- the direction "better" results are sorted towards
---        layout_strategy = "horizontal",
---        layout_config = {
---            width = 0.95,               -- floating window takes up 95% of the screen
---            preview_width = 0.85,       -- preview window takes up 85% of the floating window
---            preview_cutoff = 20         -- disable preview when columns are less than this value
---        },
---        initial_mode = "normal",        -- starts in normal mode, press i to enter insert mode
---        mappings = {
---            n = {
---                -- kill selected buffer in buffer picker
---                [ "<Leader>k" ] = require("telescope.actions").delete_buffer,
---                -- toggle preview
---                [ "<Leader>m" ] = require("telescope.actions.layout").toggle_preview
---            }
---        },
---        preview = { hide_on_startup = true }            -- hides preview window when picker starts
---    },
---    pickers = {
---        find_files = { initial_mode = "insert" },       -- starts in insert mode
---        grep_string = { initial_mode = "insert" },
---        live_grep = { initial_mode = "insert" },
---        keymaps = { initial_mode = "insert" }
---    }
---}
---
----- Install LSP servers
----- I am using mason.nvim to automatically install LSP server. Type :mason to see more details
----- You can also install servers manually, and then add the following line in your LSP setup.
-----      cmd = { "path-to-your-language-server-executable" } 
-----      Example:
-----          require("lspconfig").clangd.setup {
-----              cmd = { "path-to-your-clangd-server-executable" },
-----              on_attach = on_attach
-----          }
---require("mason").setup()
---require("mason-lspconfig").setup {
---    -- language servers that should always be installed
---    ensure_installed = { "clangd", "rust_analyzer" }
---}
---
----- set up LSP configs
----- type :lsp to see available commands, such as LspInfo
---local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
---    -- lsp services
---    nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
---    nmap('gD', vim.lsp.buf.declaration)
---    nmap('gr', '<cmd>Telescope lsp_references<CR>')
---    nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
---    nmap('gci', '<cmd>Telescope lsp_incoming_calls<CR>')    -- call hierarchy: incoming
---    nmap('gco', '<cmd>Telescope lsp_outgoing_calls<CR>')    -- call hierarchy: outgoing
---    nmap('gb', '<cmd>Telescope lsp_document_symbols<CR>')   -- list symbols in the current buffer
---    nmap('gw', '<cmd>Telescope lsp_workspace_symbols<CR>')  -- list symbols in the current workspace
---    nmap('ge', vim.diagnostic.open_float)                   -- print error message in a floating window
---    nmap('ga', vim.lsp.buf.code_action)                     -- code actions, such as quick fixes
---    nmap('gh', vim.lsp.buf.hover)                           -- provides documentation
---    nmap('gs', vim.lsp.buf.signature_help)                  -- provides documentation as you type the argument
---    nmap('gf', vim.lsp.buf.format)                          -- format the current file
---    nmap('gn', vim.lsp.buf.rename)                          -- rename a symbol
---end
+
 --
 ---- set up LSP floating window border
 --vim.diagnostic.config{ float = { border = "single" } }
@@ -418,98 +499,4 @@ cmd("colorscheme nightfox")
 --        nmap("<Leader>r", gs.reset_hunk)
 --    end
 --}
-
-
---
--- general configurations
---
-opt.number = true
-opt.relativenumber = true
-opt.scrolloff = 3                   -- minimal number of screen lines to keep above and below the cursor
-
--- search
-opt.showmatch = true                -- show matching brackets when text indicator is over them
-opt.hlsearch = true                 -- highlight search
-nmap("<BS>", ":nohlsearch<CR>")     -- BackSpace clears search highlights
-opt.incsearch = true                -- incremental search
-opt.ignorecase = true
-opt.smartcase = true                -- works as case-insensitive if you only use lowercase letters;
-                                    -- otherwise, it will search in case-sensitive mode
-
--- format
-opt.cursorline = false              -- highlight the cursorline, or not!
-opt.cmdheight = 0                   -- hide command line
-opt.termguicolors = true            -- true color support
-opt.wrap = true                     -- wrap very long lines to make them look like multiple lines
-opt.textwidth = 120                 -- the upper limit of the number of characters in one line
-opt.autoindent = true
-opt.expandtab = true
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.spell = false                   -- enable spell checker in comments, use zg or zw to mark words as good or wrong
-opt.spelloptions = "camel"          -- be smart with camelCased words
-
----- folding
---opt.foldmethod = "expr"             -- smart folding by tree-sitter
---opt.foldexpr = "nvim_treesitter#foldexpr()"
---opt.foldenable = false
---vim.api.nvim_set_hl(0, 'Folded', { fg = 'red', bold = true, bg = 'None' })  -- highlight folded
-
--- device
-opt.mouse = "nv"                    -- applied to normal and visual modes
-
--- display file name on the terminal title
-opt.title = true
-
--- turn backup off, since most stuff is in Git or something else anyway...
-opt.backup = false
-opt.wb = false
-opt.swapfile = false
-
--- special key mappings
-opt.timeoutlen = 3000               -- specify the timeout length (in milliseconds) of mapped key sequences
-nmap("<C-s>", "<cmd>update<CR>")    -- save changes
-nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
-nmap("<Leader>w", "<C-w>")          -- window operations, note that you can type <C-w>w to switch to floating window
-nmap("<Leader><Leader>", "<C-^>")   -- go to the alternate buffer
-
--- move cursor by visual lines instead of physical lines when wrapping
-nmap("j", "gj")
-nmap("k", "gk")
-vmap("j", "gj")
-vmap("k", "gk")
-
--- Neovim terminal mode
--- type :term to enter the terminal 
--- type <Esc> to enter normal mode in the terminal, then you can use file explorer to switch buffers
-map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
-
--- leap
-nmap("<Leader>f", "<Plug>(leap-forward-to)")            -- easymotion forward
-nmap("<Leader>b", "<Plug>(leap-backward-to)")           -- easymotion backward
-
----- Telescope, t for telescope
----- use navigation keys in telescope, such as j and k; press i to enter insert mode
----- <C-v> vsplit, <C-x> split;
---nmap("<Leader>tk", "<cmd>Telescope keymaps<CR>")        -- lists key mappings
---nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
---nmap("<Leader>tb", "<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<CR>")   -- lists opened files
---nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
---nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
----- live_grep:           exact matches in the current working directory
----- live_grep returns exact matches for the current query after each key press. Therefore it can't be fuzzy unless the
----- grep tool provides a fuzzy engine.
---nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
----- grep_empty_string:   fuzzy search in the current working directory
----- grep_string returns all exact matches for the current query, then allows user to apply fuzzy filter.
----- I use an empty string as the initial query, so essentially I am applying fuzzy filter on every line in the directory.
----- This might be slow on large projects!
---nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
---nmap("<Leader>tr", "<cmd>Telescope resume<CR>")
----- Telescope git integration, v for version control
---nmap("<Leader>tvc", "<cmd>Telescope git_commits<CR>")   -- git commits with diff preview, press <CR> to checkout commit
---nmap("<Leader>tvbc", "<cmd>Telescope git_bcommits<CR>") -- current buffer's git commits 
---nmap("<Leader>tvbr", "<cmd>Telescope git_branches<CR>") -- git branches
---nmap("<Leader>tvs", "<cmd>Telescope git_status<CR>")    -- git status
---
 
