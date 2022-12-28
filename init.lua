@@ -237,9 +237,10 @@ require("lazy").setup {
         end
     },
     {   -- smooth scroll
-        "karb94/neoscroll.nvim",
+        "echasnovski/mini.animate",
+        event = "CursorHold",
         keys = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' },
-        config = { mappings = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' } }  -- smooth these scroll operations
+        config = function() require("mini.animate").setup() end
     },
     {   -- auto-pair
         "windwp/nvim-autopairs",
@@ -300,7 +301,7 @@ require("lazy").setup {
             -- I use an empty string as the initial query, so essentially I am applying fuzzy filter on every line in the directory.
             -- This might be slow on large projects!
             nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
-            nmap("<Leader>tr", "<cmd>Telescope resume<CR>")
+            nmap("<Leader>tr", "<cmd>Telescope resume<CR>")         -- lists results of the previous picker
             -- Telescope git integration, v for version control
             nmap("<Leader>tvc", "<cmd>Telescope git_commits<CR>")   -- git commits with diff preview, press <CR> to checkout commit
             nmap("<Leader>tvbc", "<cmd>Telescope git_bcommits<CR>") -- current buffer's git commits 
@@ -363,12 +364,12 @@ require("lazy").setup {
     --
     {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
         "williamboman/mason.nvim",
-        event = "VeryLazy",
+        event = "BufReadPost",
         config = { ui = { icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } } }
     },
     {   -- helper for mason.nvim
         "williamboman/mason-lspconfig.nvim",
-        event = "VeryLazy",
+        event = "BufReadPost",
         config = {
             -- language servers that should always be installed
             ensure_installed = { "clangd", "rust_analyzer" }
@@ -384,7 +385,7 @@ require("lazy").setup {
         --              on_attach = on_attach
         --          }
         "neovim/nvim-lspconfig",
-        event = "VeryLazy",
+        event = "BufReadPost",
         config = function()
             -- set up LSP floating window border
             vim.diagnostic.config{ float = { border = "rounded" } }
