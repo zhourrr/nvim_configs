@@ -97,7 +97,7 @@ map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
 
 --
--- load plugins via Lazy
+-- load plugins via Lazy, type :Lazy to see available commands
 --
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -482,16 +482,13 @@ require("lazy").setup {
     }
 }
 
-
-nmap("<Leader>1", "<cmd>Lazy<CR>")
-
 -- highlight window separators
 vim.api.nvim_create_autocmd(
     { "ColorScheme" },
     { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None', bold = true })" }
 )
+
 -- random themes
 themes = { "nightfox", "catppuccin-mocha", "dayfox", "everforest" }
-cmd("colorscheme nightfox")
--- cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
+cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 
