@@ -31,13 +31,9 @@ local function map(mode, shortcut, command)
     vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true })
 end
 -- helper function for setting normal mode mapping
-local function nmap(shortcut, command)
-    map('n', shortcut, command)
-end
+local function nmap(shortcut, command) map('n', shortcut, command) end
 -- helper function for setting visual mode mapping
-local function vmap(shortcut, command)
-    map('v', shortcut, command)
-end
+local function vmap(shortcut, command) map('v', shortcut, command) end
 
 
 --
@@ -52,9 +48,8 @@ opt.showmatch = true                -- show matching brackets when text indicato
 opt.hlsearch = true                 -- highlight search
 nmap("<BS>", "<cmd>nohlsearch<CR>") -- BackSpace clears search highlights
 opt.incsearch = true                -- incremental search
-opt.ignorecase = true
-opt.smartcase = true                -- works as case-insensitive if you only use lowercase letters;
-                                    -- otherwise, it will search in case-sensitive mode
+opt.ignorecase = true               -- works as case-insensitive if you only use lowercase letters;
+opt.smartcase = true                -- otherwise, it will search in case-sensitive mode
 
 -- format
 opt.cursorline = false              -- highlight the cursorline, or not!
@@ -256,7 +251,7 @@ require("lazy").setup {
     },
     {   -- picker and previewer
         "nvim-telescope/telescope.nvim",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = function()
             require("telescope").setup {
                 defaults = {
@@ -298,12 +293,12 @@ require("lazy").setup {
             nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
             -- grep_empty_string:   fuzzy search in the current working directory
             -- grep_string returns all exact matches for the current query, then allows user to apply fuzzy filter.
-            -- I use an empty string as the initial query, so essentially I am applying fuzzy filter on every line in the directory.
+            -- With an empty string as the initial query, fuzzy filter is applied to every line in the directory.
             -- This might be slow on large projects!
             nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
             nmap("<Leader>tr", "<cmd>Telescope resume<CR>")         -- lists results of the previous picker
             -- Telescope git integration, v for version control
-            nmap("<Leader>tvc", "<cmd>Telescope git_commits<CR>")   -- git commits with diff preview, press <CR> to checkout commit
+            nmap("<Leader>tvc", "<cmd>Telescope git_commits<CR>")   -- git commits, press <CR> to checkout commit
             nmap("<Leader>tvbc", "<cmd>Telescope git_bcommits<CR>") -- current buffer's git commits 
             nmap("<Leader>tvbr", "<cmd>Telescope git_branches<CR>") -- git branches
             nmap("<Leader>tvs", "<cmd>Telescope git_status<CR>")    -- git status
@@ -311,11 +306,11 @@ require("lazy").setup {
     },
     {   -- language parser and highlighter
         "nvim-treesitter/nvim-treesitter",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = function()
 	        require("nvim-treesitter.configs").setup{
                 -- language parsers that should always be installed
-                ensure_installed = { "c", "cpp", "python" },
+                ensure_installed = { "lua", "c", "cpp", "python" },
                 highlight = { enable = true },
                 indent = { enable = true },
                 incremental_selection = {               -- smart selection powered by treesitter
@@ -336,7 +331,7 @@ require("lazy").setup {
     },
     {   -- sticky scroll
         "nvim-treesitter/nvim-treesitter-context",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = true
     },
     {   -- git integration
@@ -364,12 +359,12 @@ require("lazy").setup {
     --
     {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
         "williamboman/mason.nvim",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = { ui = { icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } } }
     },
     {   -- helper for mason.nvim
         "williamboman/mason-lspconfig.nvim",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = {
             -- language servers that should always be installed
             -- ensure_installed = { "clangd", "rust_analyzer" }
@@ -381,11 +376,10 @@ require("lazy").setup {
         --      cmd = { "path-to-your-language-server-executable" } 
         --      Example:
         --          require("lspconfig").clangd.setup {
-        --              cmd = { "path-to-your-clangd-server-executable" },
-        --              on_attach = on_attach
+        --              cmd = { "path-to-your-clangd-server-executable" }, on_attach = on_attach
         --          }
         "neovim/nvim-lspconfig",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = function()
             -- set up LSP floating window border
             vim.diagnostic.config{ float = { border = "rounded" } }
@@ -489,11 +483,13 @@ require("lazy").setup {
 
 -- highlight window separators
 vim.api.nvim_create_autocmd(
-    { "ColorScheme" },
-    { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None', bold = true })" }
+    { "ColorScheme" }, { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None' })" }
 )
 
 -- random themes
 themes = { "nightfox", "catppuccin-mocha", "dayfox", "everforest" }
 cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 
+-- show macro visual feedback
+vim.api.nvim_create_autocmd( { "RecordingEnter" }, { command = "set cmdheight=1" })
+vim.api.nvim_create_autocmd( { "RecordingLeave" }, { command = "set cmdheight=0" })
