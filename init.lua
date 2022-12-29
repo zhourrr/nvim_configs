@@ -256,7 +256,7 @@ require("lazy").setup {
     },
     {   -- picker and previewer
         "nvim-telescope/telescope.nvim",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = function()
             require("telescope").setup {
                 defaults = {
@@ -311,7 +311,7 @@ require("lazy").setup {
     },
     {   -- language parser and highlighter
         "nvim-treesitter/nvim-treesitter",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = function()
 	        require("nvim-treesitter.configs").setup{
                 -- language parsers that should always be installed
@@ -336,7 +336,7 @@ require("lazy").setup {
     },
     {   -- sticky scroll
         "nvim-treesitter/nvim-treesitter-context",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = true
     },
     {   -- git integration
@@ -364,12 +364,12 @@ require("lazy").setup {
     --
     {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
         "williamboman/mason.nvim",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = { ui = { icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } } }
     },
     {   -- helper for mason.nvim
         "williamboman/mason-lspconfig.nvim",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = {
             -- language servers that should always be installed
             ensure_installed = { "clangd", "rust_analyzer" }
@@ -385,7 +385,7 @@ require("lazy").setup {
         --              on_attach = on_attach
         --          }
         "neovim/nvim-lspconfig",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = function()
             -- set up LSP floating window border
             vim.diagnostic.config{ float = { border = "rounded" } }
