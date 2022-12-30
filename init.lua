@@ -250,7 +250,7 @@ require("lazy").setup {
             map_cr = true,                  -- map <CR> key
             map_bs = true,             	    -- map <BS> key
             map_c_h = false,           	    -- map the <C-h> key to delete a pair
-            map_c_w = false           	    -- map <c-w> to delete a pair if possible
+            map_c_w = false           	    -- map <C-w> to delete a pair if possible
         }
     },
     {   -- picker and previewer
