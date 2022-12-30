@@ -26,6 +26,8 @@ vim.g.mapleader = " "
 --
 local cmd = vim.cmd
 local opt = vim.opt
+-- helper function for setting highlight
+local function hl(group, highlight) vim.api.nvim_set_hl(0, group, highlight) end
 -- call built-in keymap.set function
 local function map(mode, shortcut, command)
     vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true })
@@ -46,7 +48,7 @@ opt.scrolloff = 3                   -- minimal number of screen lines to keep ab
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
 opt.hlsearch = true                 -- highlight search
-nmap("<BS>", "<cmd>nohlsearch<CR>") -- BackSpace clears search highlights
+nmap("<BS>", "<cmd>nohlsearch<CR><cmd>lua MiniCursorword.auto_unhighlight()<CR>")   -- BackSpace clears search highlights
 opt.incsearch = true                -- incremental search
 opt.ignorecase = true               -- works as case-insensitive if you only use lowercase letters;
 opt.smartcase = true                -- otherwise, it will search in case-sensitive mode
@@ -116,9 +118,7 @@ opt.runtimepath:prepend(lazypath)
 -- config:  a custom setup function or arguments passed to the default plugin setup function
 --
 require("lazy").setup {
-    --
     -- UI
-    --
     {   -- color scheme
         "EdenEast/nightfox.nvim",
 	    config = {  -- set comment style
@@ -205,14 +205,10 @@ require("lazy").setup {
             }
         }
     },
-    -- 
     -- dependency
-    --
     { "nvim-lua/plenary.nvim" },
     { "nvim-tree/nvim-web-devicons", config = true },   -- file icons
-    --
     -- utility
-    --
     {   -- toggle comments
         "terrortylor/nvim-comment",
         name = "nvim_comment",
@@ -237,6 +233,14 @@ require("lazy").setup {
         keys = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' },
         config = function() require("mini.animate").setup() end
     },
+    {   -- highlight cursor word's references
+        "echasnovski/mini.cursorword", 
+        event = "BufReadPost",
+        config = function() 
+            require("mini.cursorword").setup()
+            hl("MiniCursorword", { italic = true, bold = true, standout = true })
+        end
+    },
     {   -- auto-pair
         "windwp/nvim-autopairs",
         event = "InsertEnter",
@@ -246,12 +250,12 @@ require("lazy").setup {
             map_cr = true,                  -- map <CR> key
             map_bs = true,             	    -- map <BS> key
             map_c_h = false,           	    -- map the <C-h> key to delete a pair
-            map_c_w = false           	    -- map <c-w> to delete a pair if possible
+            map_c_w = false           	    -- map <C-w> to delete a pair if possible
         }
     },
     {   -- picker and previewer
         "nvim-telescope/telescope.nvim",
-        event = { "BufReadPost", "CursorHold" },
+        event = "VeryLazy",
         config = function()
             require("telescope").setup {
                 defaults = {
@@ -290,9 +294,10 @@ require("lazy").setup {
             -- live_grep:           exact matches in the current working directory
             -- live_grep returns exact matches for the current query after each key press. Therefore it can't be fuzzy 
             -- unless the grep tool provides a fuzzy engine.
-            nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
+            nmap("<Leader>tl", "<cmd>Telescope live_grep<CR>")
+            -- grep_string:         exact matches for the current query, then allows user to apply fuzzy filter.
+            nmap("<Leader>tg", "<cmd>Telescope grep_string<CR>")
             -- grep_empty_string:   fuzzy search in the current working directory
-            -- grep_string returns all exact matches for the current query, then allows user to apply fuzzy filter.
             -- With an empty string as the initial query, fuzzy filter is applied to every line in the directory.
             -- This might be slow on large projects!
             nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
@@ -323,10 +328,10 @@ require("lazy").setup {
                     }
                 }
             }
-            opt.foldmethod = "expr"                     -- smart folding powered by tree-sitter
+            opt.foldmethod = "expr"                                     -- smart folding powered by tree-sitter
             opt.foldexpr = "nvim_treesitter#foldexpr()"
             opt.foldenable = false
-            vim.api.nvim_set_hl(0, 'Folded', { fg = 'red', bold = true, bg = 'None' }) 	-- highlight folded
+            hl("Folded", { fg = "red", bg = "None", bold = true })      -- highlight folded
         end
     },
     {   -- sticky scroll
@@ -354,9 +359,7 @@ require("lazy").setup {
             end
         }
     },
-    -- 
     -- Language Server Protocol (LSP)
-    --
     {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
         "williamboman/mason.nvim",
         event = { "BufReadPost", "CursorHold" },
@@ -483,7 +486,7 @@ require("lazy").setup {
 
 -- highlight window separators
 vim.api.nvim_create_autocmd(
-    { "ColorScheme" }, { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None' })" }
+    { "ColorScheme" }, { callback = function() hl("WinSeparator", { fg = "orange", bg = "None" }) end }
 )
 
 -- random themes
