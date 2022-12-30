@@ -26,6 +26,8 @@ vim.g.mapleader = " "
 --
 local cmd = vim.cmd
 local opt = vim.opt
+-- helper function for setting highlight
+local function hl(group, highlight) vim.api.nvim_set_hl(0, group, highlight) end
 -- call built-in keymap.set function
 local function map(mode, shortcut, command)
     vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true })
@@ -46,7 +48,7 @@ opt.scrolloff = 3                   -- minimal number of screen lines to keep ab
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
 opt.hlsearch = true                 -- highlight search
-nmap("<BS>", "<cmd>nohlsearch<CR>") -- BackSpace clears search highlights
+nmap("<BS>", "<cmd>nohlsearch<CR><cmd>lua MiniCursorword.auto_unhighlight()<CR>")   -- BackSpace clears search highlights
 opt.incsearch = true                -- incremental search
 opt.ignorecase = true               -- works as case-insensitive if you only use lowercase letters;
 opt.smartcase = true                -- otherwise, it will search in case-sensitive mode
@@ -116,9 +118,7 @@ opt.runtimepath:prepend(lazypath)
 -- config:  a custom setup function or arguments passed to the default plugin setup function
 --
 require("lazy").setup {
-    --
     -- UI
-    --
     {   -- color scheme
         "EdenEast/nightfox.nvim",
 	    config = {  -- set comment style
@@ -205,14 +205,10 @@ require("lazy").setup {
             }
         }
     },
-    -- 
     -- dependency
-    --
     { "nvim-lua/plenary.nvim" },
     { "nvim-tree/nvim-web-devicons", config = true },   -- file icons
-    --
     -- utility
-    --
     {   -- toggle comments
         "terrortylor/nvim-comment",
         name = "nvim_comment",
@@ -236,6 +232,14 @@ require("lazy").setup {
         event = "CursorHold",
         keys = { '<C-u>', '<C-d>', 'zt', 'zz', 'zb' },
         config = function() require("mini.animate").setup() end
+    },
+    {   -- highlight cursor word's references
+        "echasnovski/mini.cursorword", 
+        event = "BufReadPost",
+        config = function() 
+            require("mini.cursorword").setup()
+            hl("MiniCursorword", { italic = true, bold = true, standout = true })
+        end
     },
     {   -- auto-pair
         "windwp/nvim-autopairs",
@@ -323,10 +327,10 @@ require("lazy").setup {
                     }
                 }
             }
-            opt.foldmethod = "expr"                     -- smart folding powered by tree-sitter
+            opt.foldmethod = "expr"                                     -- smart folding powered by tree-sitter
             opt.foldexpr = "nvim_treesitter#foldexpr()"
             opt.foldenable = false
-            vim.api.nvim_set_hl(0, 'Folded', { fg = 'red', bold = true, bg = 'None' }) 	-- highlight folded
+            hl("Folded", { fg = "red", bg = "None", bold = true })      -- highlight folded
         end
     },
     {   -- sticky scroll
@@ -354,9 +358,7 @@ require("lazy").setup {
             end
         }
     },
-    -- 
     -- Language Server Protocol (LSP)
-    --
     {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
         "williamboman/mason.nvim",
         event = { "BufReadPost", "CursorHold" },
@@ -479,7 +481,7 @@ require("lazy").setup {
 
 -- highlight window separators
 vim.api.nvim_create_autocmd(
-    { "ColorScheme" }, { command = "lua vim.api.nvim_set_hl(0, 'WinSeparator', { fg = 'orange', bg = 'None' })" }
+    { "ColorScheme" }, { callback = function() hl("WinSeparator", { fg = "orange", bg = "None" }) end }
 )
 
 -- random themes
