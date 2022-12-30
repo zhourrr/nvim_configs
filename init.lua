@@ -255,7 +255,7 @@ require("lazy").setup {
     },
     {   -- picker and previewer
         "nvim-telescope/telescope.nvim",
-        event = { "BufReadPost", "CursorHold" },
+        event = "VeryLazy",
         config = function()
             require("telescope").setup {
                 defaults = {
@@ -294,9 +294,10 @@ require("lazy").setup {
             -- live_grep:           exact matches in the current working directory
             -- live_grep returns exact matches for the current query after each key press. Therefore it can't be fuzzy 
             -- unless the grep tool provides a fuzzy engine.
-            nmap("<Leader>tg", "<cmd>Telescope live_grep<CR>")
+            nmap("<Leader>tl", "<cmd>Telescope live_grep<CR>")
+            -- grep_string:         exact matches for the current query, then allows user to apply fuzzy filter.
+            nmap("<Leader>tg", "<cmd>Telescope grep_string<CR>")
             -- grep_empty_string:   fuzzy search in the current working directory
-            -- grep_string returns all exact matches for the current query, then allows user to apply fuzzy filter.
             -- With an empty string as the initial query, fuzzy filter is applied to every line in the directory.
             -- This might be slow on large projects!
             nmap("<Leader>tz", "<cmd>lua require('telescope.builtin').grep_string({ only_sort_text = true, search = '' })<CR>")
