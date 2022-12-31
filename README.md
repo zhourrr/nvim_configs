@@ -2,7 +2,7 @@
 
 I know nothing about lua language, therefore I almost commented everything in the init.lua file. 
 
-It is **_intended to be a minimal configuration which involves only one file that does not exceed 500 lines._**
+It is **_intended to be a minimal configuration which involves only one file that does not exceed 550 lines._**
 
 Copy the `init.lua` file to `~/.config/nvim/`  
 The required plugins will be installed when you open your Neovim for the first time. I use lazy.nvim as my plugin manager, so everything should work smoothly.
