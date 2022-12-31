@@ -235,10 +235,12 @@ require("lazy").setup {
     },
     {   -- highlight cursor word's references
         "echasnovski/mini.cursorword", 
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = function() 
             require("mini.cursorword").setup()
-            hl("MiniCursorword", { italic = true, bold = true, standout = true })
+            local function hl_cursor() hl("MiniCursorword", { italic = true, bold = true, standout = true }) end
+            hl_cursor()     -- set highlight format of MiniCursorword
+            vim.api.nvim_create_autocmd( { "ColorScheme" }, { callback = hl_cursor } )
             local function toggle_cursor()  -- toggle cursor word highlight
                 vim.g.minicursorword_disable = not vim.g.minicursorword_disable
                 MiniCursorword.auto_unhighlight()
