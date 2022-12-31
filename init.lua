@@ -239,6 +239,12 @@ require("lazy").setup {
         config = function() 
             require("mini.cursorword").setup()
             hl("MiniCursorword", { italic = true, bold = true, standout = true })
+            local function toggle_cursor()  -- toggle cursor word highlight
+                vim.b.minicursorword_disable = not vim.b.minicursorword_disable
+                MiniCursorword.auto_unhighlight()
+                MiniCursorword.auto_highlight()
+            end
+            nmap("<Leader>h", toggle_cursor)
         end
     },
     {   -- auto-pair
@@ -272,7 +278,7 @@ require("lazy").setup {
                             -- kill selected buffer in buffer picker
                             [ "<Leader>k" ] = require("telescope.actions").delete_buffer,
                             -- toggle preview
-                            [ "<Leader>m" ] = require("telescope.actions.layout").toggle_preview
+                            [ "<Leader>o" ] = require("telescope.actions.layout").toggle_preview
                         }
                     },
                     preview = { hide_on_startup = true }            -- hides preview window when picker starts
@@ -476,6 +482,8 @@ require("lazy").setup {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
             })
+            -- add parentheses after selecting function or method item
+            cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
         end
     }
 }
@@ -492,3 +500,4 @@ cmd("colorscheme " .. themes[1 + math.random(os.time()) % 4])
 -- show macro visual feedback
 vim.api.nvim_create_autocmd( { "RecordingEnter" }, { command = "set cmdheight=1" })
 vim.api.nvim_create_autocmd( { "RecordingLeave" }, { command = "set cmdheight=0" })
+
