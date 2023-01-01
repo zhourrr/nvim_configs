@@ -54,7 +54,7 @@ opt.ignorecase = true               -- works as case-insensitive if you only use
 opt.smartcase = true                -- otherwise, it will search in case-sensitive mode
 
 -- format
-opt.cursorline = false              -- highlight the cursorline, or not!
+opt.cursorline = true               -- highlight the cursorline
 opt.cmdheight = 0                   -- hide command line
 opt.termguicolors = true            -- true color support
 opt.wrap = true                     -- wrap very long lines to make them look like multiple lines
