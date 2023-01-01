@@ -405,12 +405,14 @@ require("lazy").setup {
                 nmap('gco', '<cmd>Telescope lsp_outgoing_calls<CR>')    -- call hierarchy: outgoing
                 nmap('gb', '<cmd>Telescope lsp_document_symbols<CR>')   -- list symbols in the current buffer
                 nmap('gw', '<cmd>Telescope lsp_workspace_symbols<CR>')  -- list symbols in the current workspace
-                nmap('ge', vim.diagnostic.open_float)                   -- print error message in a floating window
                 nmap('ga', vim.lsp.buf.code_action)                     -- code actions, such as quick fixes
                 nmap('gh', vim.lsp.buf.hover)                           -- provides documentation
                 nmap('gs', vim.lsp.buf.signature_help)                  -- provides documentation about the arguments
                 nmap('gf', vim.lsp.buf.format)                          -- format the current file
                 nmap('gn', vim.lsp.buf.rename)                          -- rename a symbol
+                nmap('ge', vim.diagnostic.open_float)                   -- print error message in a floating window
+                nmap('[e', vim.diagnostic.goto_prev)                    -- go to the previous error
+                nmap(']e', vim.diagnostic.goto_next)                    -- go to the next error
             end
             -- configure each language server
             require("lspconfig").clangd.setup { on_attach = on_attach }
