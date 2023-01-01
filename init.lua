@@ -270,11 +270,13 @@ require("lazy").setup {
                     sorting_strategy = "ascending", -- the direction "better" results are sorted towards
                     layout_strategy = "vertical",
                     layout_config = {
-                        scroll_speed = 7,           -- use <C-d> and <C-u> to scroll the preview screen
-                        height = 0.95,              -- floating window takes up 95% of the screen's vertical space
-                        width = 0.95,               -- floating window takes up 95% of the screen's horizontal space
-                        preview_height = 0.6,       -- preview window takes up 60% of the floating window
-                        preview_cutoff = 20         -- disable preview when lines are less than this value
+                        vertical = {
+                            scroll_speed = 7,           -- use <C-d> and <C-u> to scroll the preview screen
+                            height = 0.95,              -- floating window takes up 95% of the screen's vertical space
+                            width = 0.95,               -- floating window takes up 95% of the screen's horizontal space
+                            preview_height = 0.6,       -- preview window takes up 60% of the floating window
+                            preview_cutoff = 20         -- disable preview when lines are less than this value
+                        }
                     },
                     initial_mode = "normal",        -- starts in normal mode, press i to enter insert mode
                     mappings = {
