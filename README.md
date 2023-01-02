@@ -40,4 +40,11 @@ The required plugins will be installed when you open your Neovim for the first t
 
 ## Git
 ![Screenshot 11](https://user-images.githubusercontent.com/78126249/209765272-57d87626-4d4f-48ad-b12a-80ef614fcd56.png)
+### Commit history
+![Commit-history](https://user-images.githubusercontent.com/78126249/210264043-faea9591-7ed4-47a5-aeea-70bba518c532.png)
+### Current buffer's commits
+![Buffer-commits](https://user-images.githubusercontent.com/78126249/210264091-c8a40c57-07d7-4a77-a5a5-5d7ccd1fdaf7.png)
+
+
+
 
