@@ -22,20 +22,15 @@ vim.g.mapleader = " "
 
 
 --
--- helpers and set_key_mapping functions
+-- helper functions
 --
 local cmd = vim.cmd
 local opt = vim.opt
--- helper function for setting highlight
-local function hl(group, highlight) vim.api.nvim_set_hl(0, group, highlight) end
+local function hl(group, highlight) vim.api.nvim_set_hl(0, group, highlight) end    -- set highlight
 -- call built-in keymap.set function
-local function map(mode, shortcut, command)
-    vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true })
-end
--- helper function for setting normal mode mapping
-local function nmap(shortcut, command) map('n', shortcut, command) end
--- helper function for setting visual mode mapping
-local function vmap(shortcut, command) map('v', shortcut, command) end
+local function map(mode, shortcut, command) vim.keymap.set(mode, shortcut, command, { noremap = true, silent = true }) end
+local function nmap(shortcut, command) map('n', shortcut, command) end              -- set normal mode mapping
+local function vmap(shortcut, command) map('v', shortcut, command) end              -- set visual mode mapping
 
 
 --
@@ -48,7 +43,7 @@ opt.scrolloff = 3                   -- minimal number of screen lines to keep ab
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
 opt.hlsearch = true                 -- highlight search
-nmap("<BS>", "<cmd>nohlsearch<CR><cmd>lua MiniCursorword.auto_unhighlight()<CR>")   -- BackSpace clears search highlights
+nmap("<BS>", "<cmd>nohlsearch<CR>") -- BackSpace clears search highlights
 opt.incsearch = true                -- incremental search
 opt.ignorecase = true               -- works as case-insensitive if you only use lowercase letters;
 opt.smartcase = true                -- otherwise, it will search in case-sensitive mode
@@ -90,14 +85,14 @@ vmap("k", "gk")
 -- Neovim terminal mode
 -- type :term to enter the terminal 
 -- type <Esc> to enter normal mode in the terminal, then you can use file explorer to switch buffers
-map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+map("t", "<Esc>", "<C-\\><C-n>")
 
 
 --
 -- load plugins via Lazy, type :Lazy to see available commands
 --
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.loop.fs_stat(lazypath) then      -- automatically install "lazy" if not found
     vim.fn.system({
         "git",
         "clone",
@@ -192,8 +187,8 @@ require("lazy").setup {
                lualine_a = { 'mode' },
                lualine_b = { 'hostname', 'branch', 
                     { 
-                        'filename', path = 1, 
-                        symbols = {
+                        'filename', path = 1,   -- show relative file path
+                        symbols = {             -- symbols for file status
                             modified = '[M]', readonly = '[R]',
                             unnamed = '[No Name]', newfile = '[New]'
                         }
@@ -239,7 +234,7 @@ require("lazy").setup {
         config = function() 
             require("mini.cursorword").setup()
             local function hl_cursor() hl("MiniCursorword", { italic = true, bold = true, standout = true }) end
-            hl_cursor()     -- set highlight format of MiniCursorword
+            hl_cursor()                     -- set highlight format of MiniCursorword
             vim.api.nvim_create_autocmd( { "ColorScheme" }, { callback = hl_cursor } )
             local function toggle_cursor()  -- toggle cursor word highlight
                 vim.g.minicursorword_disable = not vim.g.minicursorword_disable
@@ -257,8 +252,8 @@ require("lazy").setup {
             enable_moveright = true,
             map_cr = true,                  -- map <CR> key
             map_bs = true,             	    -- map <BS> key
-            map_c_h = false,           	    -- map the <C-h> key to delete a pair
-            map_c_w = false           	    -- map <C-w> to delete a pair if possible
+            map_c_h = false,           	    -- do not map <C-h> key to delete a pair
+            map_c_w = false           	    -- do not map <C-w> to delete a pair if possible
         }
     },
     {   -- picker and previewer
@@ -267,14 +262,16 @@ require("lazy").setup {
         config = function()
             require("telescope").setup {
                 defaults = {
-                    sorting_strategy = "ascending", -- the direction "better" results are sorted towards
+                    sorting_strategy = "ascending",     -- the direction "better" results are sorted towards
                     layout_strategy = "vertical",
                     layout_config = {
-                        scroll_speed = 7,           -- use <C-d> and <C-u> to scroll the preview screen
-                        height = 0.95,              -- floating window takes up 95% of the screen's vertical space
-                        width = 0.95,               -- floating window takes up 95% of the screen's horizontal space
-                        preview_height = 0.6,       -- preview window takes up 60% of the floating window
-                        preview_cutoff = 20         -- disable preview when lines are less than this value
+                        vertical = {
+                            scroll_speed = 7,           -- use <C-d> and <C-u> to scroll the preview screen
+                            height = 0.95,              -- floating window takes up 95% of the screen's vertical space
+                            width = 0.95,               -- floating window takes up 95% of the screen's horizontal space
+                            preview_height = 0.6,       -- preview window takes up 60% of the floating window
+                            preview_cutoff = 20         -- disable preview when lines are less than this value
+                        }
                     },
                     initial_mode = "normal",        -- starts in normal mode, press i to enter insert mode
                     mappings = {
@@ -328,20 +325,20 @@ require("lazy").setup {
                 ensure_installed = { "lua", "c", "cpp", "python" },
                 highlight = { enable = true },
                 indent = { enable = true },
-                incremental_selection = {               -- smart selection powered by treesitter
+                incremental_selection = {                           -- smart selection powered by treesitter
                     enable = true,
                     keymaps = {
-                        init_selection = "<CR>",        -- select the area under the cursor
-                        node_incremental = "<CR>",      -- increment a little bit
-                        scope_incremental = "<TAB>",    -- increment a lot
-                        node_decremental = "<BS>"       -- decrement a little bit
+                        init_selection = "<Leader><CR>",            -- select the area under the cursor
+                        node_incremental = "<CR>",                  -- increment a little bit
+                        scope_incremental = "<TAB>",                -- increment a lot
+                        node_decremental = "<BS>"                   -- decrement a little bit
                     }
                 }
             }
-            opt.foldmethod = "expr"                                     -- smart folding powered by tree-sitter
+            opt.foldmethod = "expr"                                 -- smart folding powered by tree-sitter
             opt.foldexpr = "nvim_treesitter#foldexpr()"
             opt.foldenable = false
-            hl("Folded", { fg = "red", bg = "None", bold = true })      -- highlight folded
+            hl("Folded", { fg = "red", bg = "None", bold = true })  -- highlight folded
         end
     },
     {   -- sticky scroll
@@ -351,7 +348,7 @@ require("lazy").setup {
     },
     {   -- git integration
         "lewis6991/gitsigns.nvim",
-        event = "BufReadPost",
+        event = { "BufReadPost", "CursorHold" },
         config = {
             preview_config = { border = "rounded" },
             on_attach = function(bufnr)
@@ -395,14 +392,15 @@ require("lazy").setup {
         event = { "BufReadPost", "CursorHold" },
         config = function()
             -- set up LSP floating window border
-            vim.diagnostic.config{ float = { border = "rounded" } }
-            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+            local border_opt = { border = "rounded" }
+            vim.diagnostic.config{ float = border_opt }
+            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, border_opt)
+            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, border_opt)
             -- LSP services
             local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
                 nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
                 nmap('gD', vim.lsp.buf.declaration)
-                nmap('gr', '<cmd>Telescope lsp_references<CR>')
+                nmap('gr', "<cmd>lua require('goto-preview').goto_preview_references()<CR>")
                 nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
                 nmap('gci', '<cmd>Telescope lsp_incoming_calls<CR>')    -- call hierarchy: incoming
                 nmap('gco', '<cmd>Telescope lsp_outgoing_calls<CR>')    -- call hierarchy: outgoing
@@ -418,11 +416,36 @@ require("lazy").setup {
                 nmap(']e', vim.diagnostic.goto_next)                    -- go to the next error
             end
             -- configure each language server
-            require("lspconfig").clangd.setup {
+            require("lspconfig").clangd.setup {                         -- note that Clangd provides a switch command, try it!
                 cmd = { "/home/qinren/.local/lsp/clangd/bin/clangd" }, 
                 on_attach = on_attach 
             }
-            -- require("lspconfig").pylsp.setup { on_attach = on_attach }
+        end
+    },
+    {   -- LSP preview in a floating window
+        "rmagatti/goto-preview",
+        event = { "BufReadPost", "CursorHold" },
+        config = function()
+            require('goto-preview').setup {
+                width = 120,                -- Width of the floating window
+                height = 17,                -- Height of the floating window
+                references = {              -- Configure the telescope UI for showing the references cycling window.
+                    telescope = require("telescope.themes").get_dropdown({
+                        hide_preview = false, 
+                        layout_strategy = "center",
+                        layout_config = { width = 0.85 }
+                    })
+                },
+                post_open_hook = function(buffer, win)  -- a hook function called after the floating window is opened
+                    local function map(shortcut, command)
+                        vim.api.nvim_buf_set_keymap(buffer, "n", shortcut, command, { noremap = true, silent = true })
+                    end
+                    cmd("TSContextEnable")                                              -- give context information
+                    map("<Leader><Leader>", "<cmd>q<CR><cmd>Telescope resume<CR>")      -- switch among references
+                end
+            }
+            nmap('gpd', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>")
+            nmap('gpt', "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>")
         end
     },
     {   -- autocompletion engine
@@ -436,7 +459,7 @@ require("lazy").setup {
             "hrsh7th/cmp-cmdline",
         },
         config = function()     -- set up autocompletion engine
-            opt.completeopt = { "menu", "menuone", "noselect" }         -- autocompletion menu
+            opt.completeopt = { "menu", "menuone", "noselect" }         -- autocompletion menu options
             local cmp = require("cmp")
             local select_opts = { behavior = cmp.SelectBehavior.Select }
             local has_chars_before = function()                         -- check if there is something before the current cursor
@@ -446,8 +469,8 @@ require("lazy").setup {
             cmp.setup {
                 mapping = {
                     ["<CR>"] = cmp.mapping.confirm({ select = false }),
-                    ["<Up>"] = cmp.mapping.select_prev_item(select_opts),
-                    ["<Down>"] = cmp.mapping.select_next_item(select_opts),
+                    ["<C-p>"] = cmp.mapping.select_prev_item(select_opts),
+                    ["<C-n>"] = cmp.mapping.select_next_item(select_opts),
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then                       -- tab scrolls down
                             cmp.select_next_item(select_opts)
@@ -466,8 +489,8 @@ require("lazy").setup {
                     { name = "buffer", keyword_length = 4, priority = 1 }
                 },
                 formatting = {  -- autocompletion menu format
-                    fields = { "kind", "abbr", "menu" },
-                    format = function(entry, vim_item)
+                    fields = { "kind", "abbr", "menu" },                    -- display these fields
+                    format = function(entry, vim_item)                      -- format the fields
                         vim_item.kind = string.format("%s", vim_item.kind)  -- what kind of object is it?
                         vim_item.abbr = string.sub(vim_item.abbr, 1, 100)   -- set up a max width on completion entries
                         vim_item.menu = ({                                  -- source name
