@@ -8,25 +8,27 @@ Copy the `init.lua` file to `~/.config/nvim/`
 The required plugins will be installed when you open your Neovim for the first time. I use lazy.nvim as my plugin manager, so everything should work smoothly.
 
 # Screenshots
-![Screenshot 1](https://user-images.githubusercontent.com/78126249/209620932-6b244873-9da6-47a8-9eb3-91ce6051df0e.png)
+![Overview](https://user-images.githubusercontent.com/78126249/209620932-6b244873-9da6-47a8-9eb3-91ce6051df0e.png)
 
 ## LSP
 ### Auto-Completion
-![Screenshot 2](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
+![Auto-cmp](https://user-images.githubusercontent.com/78126249/209620000-b94f2812-b285-4614-803b-cc0b93657aa2.png)
 
-![Screenshot 3](https://user-images.githubusercontent.com/78126249/209620276-b3b1bc5f-b1f1-41fa-bd53-fb40745356d3.png)
+![Auto-signature-help](https://user-images.githubusercontent.com/78126249/209620276-b3b1bc5f-b1f1-41fa-bd53-fb40745356d3.png)
 
 ### Hover and Diagnostics
-![Screenshot 4](https://user-images.githubusercontent.com/78126249/209624149-55346f70-e4a7-4cd4-8526-f49afbb4870e.png)
+![Hover](https://user-images.githubusercontent.com/78126249/209624149-55346f70-e4a7-4cd4-8526-f49afbb4870e.png)
 
-![Screenshot 5](https://user-images.githubusercontent.com/78126249/209623775-c9fcaaa0-3c17-40ac-a29f-f59e9c542c98.png)
+![Diagnostics](https://user-images.githubusercontent.com/78126249/209623775-c9fcaaa0-3c17-40ac-a29f-f59e9c542c98.png)
 
-### goto--peek definition/declaration/reference/type definition
-#### definition
-![Screenshot 6](https://user-images.githubusercontent.com/78126249/210197830-d8920a27-1271-42d6-b346-b9f5aff2cb26.png)
-#### type definition
-![Screenshot 7](https://user-images.githubusercontent.com/78126249/210198241-ed1bad3d-7c64-41f2-a89f-b62bd9589ddc.png)
-
+### Goto--Peek definition/declaration/reference/type definition
+#### Definition
+![Peek-definition](https://user-images.githubusercontent.com/78126249/210197830-d8920a27-1271-42d6-b346-b9f5aff2cb26.png)
+#### Type Definition
+![Peek-type](https://user-images.githubusercontent.com/78126249/210198241-ed1bad3d-7c64-41f2-a89f-b62bd9589ddc.png)
+#### Reference
+![Show-references](https://user-images.githubusercontent.com/78126249/210198382-094c24a5-9ff8-4c6c-be11-464001864906.png)
+![Peek-reference](https://user-images.githubusercontent.com/78126249/210198385-85983106-c805-4d8f-9865-a867f5e57c4f.png)
 
 ## Fuzzy Search and Preview
 ### Find Files
