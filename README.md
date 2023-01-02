@@ -21,8 +21,12 @@ The required plugins will be installed when you open your Neovim for the first t
 
 ![Screenshot 5](https://user-images.githubusercontent.com/78126249/209623775-c9fcaaa0-3c17-40ac-a29f-f59e9c542c98.png)
 
-### go to definition/declaration/reference/type definition
-![Screenshot 6](https://user-images.githubusercontent.com/78126249/209702130-cae614f9-3d9e-422b-826b-0cde8d286e3c.png)
+### goto--peek definition/declaration/reference/type definition
+#### definition
+![Screenshot 6](https://user-images.githubusercontent.com/78126249/210197830-d8920a27-1271-42d6-b346-b9f5aff2cb26.png)
+#### type definition
+![Screenshot 7](https://user-images.githubusercontent.com/78126249/210198241-ed1bad3d-7c64-41f2-a89f-b62bd9589ddc.png)
+
 
 ## Fuzzy Search and Preview
 ### Find Files
