@@ -118,7 +118,11 @@ require("lazy").setup {
         "EdenEast/nightfox.nvim",
 	    config = {  -- set comment style
             options = { styles = { comments = "italic" } },
-            palettes = { nightfox = { comment = "#ffbcd9" }, dayfox = { comment = "#008000" } }
+            palettes = { nightfox = { comment = "#ffbcd9" }, dayfox = { comment = "#008000" } },
+            groups = { 
+                nightfox = { FloatBorder = { fg = "#89b4fa" }, TelescopeBorder = { fg = "#89b4fa" } },
+                dayfox = { FloatBorder = { fg = "#8e6f98" }, TelescopeBorder = { fg = "#8e6f98" } }
+            }
         } 
     },
     {   -- color scheme
