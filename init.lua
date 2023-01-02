@@ -38,7 +38,6 @@ local function vmap(shortcut, command) map('v', shortcut, command) end          
 --
 opt.number = true
 opt.relativenumber = true
-opt.scrolloff = 3                   -- minimal number of screen lines to keep above and below the cursor
 
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
