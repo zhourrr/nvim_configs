@@ -73,7 +73,8 @@ opt.swapfile = false
 opt.timeoutlen = 3000               -- specify the timeout length (in milliseconds) of mapped key sequences
 nmap("<C-s>", "<cmd>update<CR>")    -- save changes
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
-nmap("<Leader>w", "<C-w>")          -- window operations, note that you can type <C-w>w to switch to floating window
+-- Note that you can type <C-w>w to switch to floating window and <C-w>K to turn the floating window to a split window at bottom
+nmap("<Leader>w", "<C-w>")          -- window operations
 nmap("<Leader><Leader>", "<C-^>")   -- go to the alternate buffer
 
 -- move cursor by visual lines instead of physical lines when wrapping
