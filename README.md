@@ -33,14 +33,10 @@ The required plugins will be installed when you open your Neovim for the first t
 
 ## Fuzzy Search and Preview
 ### Find Files
-![Screenshot 7](https://user-images.githubusercontent.com/78126249/209870710-a044fbd7-6ef3-4ce4-8022-fe5ff5b6eb3e.png)
-
-![Screenshot 8](https://user-images.githubusercontent.com/78126249/209870800-f08a3a7e-428f-4d9a-acf3-53faca43ecae.png)
+![Find-files](https://user-images.githubusercontent.com/78126249/210262981-0f464ba5-54e2-4aa3-99ad-d55a381d89ac.png)
 
 ### Find Strings
-![Screenshot 9](https://user-images.githubusercontent.com/78126249/209871055-54cb0479-3db2-4d6d-ada4-6ea8ca5741a0.png)
-
-![Screenshot 10](https://user-images.githubusercontent.com/78126249/209871077-cf23fc00-1f9e-4bff-9c7e-6292b58f408d.png)
+![Find-strings](https://user-images.githubusercontent.com/78126249/210263020-d009c0c2-fdf4-4822-bcd7-474436212588.png)
 
 ## Git
 ![Screenshot 11](https://user-images.githubusercontent.com/78126249/209765272-57d87626-4d4f-48ad-b12a-80ef614fcd56.png)
