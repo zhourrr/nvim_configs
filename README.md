@@ -23,11 +23,12 @@ The required plugins will be installed when you open your Neovim for the first t
 
 ### Goto--Peek definition/declaration/reference/type definition
 #### Definition
-![Peek-definition](https://user-images.githubusercontent.com/78126249/210197830-d8920a27-1271-42d6-b346-b9f5aff2cb26.png)
+![Peek-definition](https://user-images.githubusercontent.com/78126249/210198594-540b41bc-e8b2-49e5-b2b6-1994d0db92d1.png)
 #### Type Definition
 ![Peek-type](https://user-images.githubusercontent.com/78126249/210198241-ed1bad3d-7c64-41f2-a89f-b62bd9589ddc.png)
-#### Reference
+#### Show References
 ![Show-references](https://user-images.githubusercontent.com/78126249/210198382-094c24a5-9ff8-4c6c-be11-464001864906.png)
+#### Peek Reference
 ![Peek-reference](https://user-images.githubusercontent.com/78126249/210198385-85983106-c805-4d8f-9865-a867f5e57c4f.png)
 
 ## Fuzzy Search and Preview
