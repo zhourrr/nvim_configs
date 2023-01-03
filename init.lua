@@ -1,4 +1,4 @@
--- Basically, you can type commands in the command mode. 
+-- Basically, you can type commands in the command mode.
 -- If you want to write a command in your script, usually you can write like this:
 -- <cmd>your command<CR>
 -- or
@@ -12,8 +12,8 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- disable the clipboard provider
--- I use Windows terminal, therefore I don't need system clipboard at all. 
--- Just enter insert mode, and use your mouse to select the content, right-click (copy) 
+-- I use Windows terminal, therefore I don't need system clipboard at all.
+-- Just enter insert mode, and use your mouse to select the content, right-click (copy)
 -- and go to wherever you want to paste it, and then press Ctrl-v as usual.
 vim.g.loaded_clipboard_provider = 0
 
@@ -38,7 +38,6 @@ local function vmap(shortcut, command) map('v', shortcut, command) end          
 --
 opt.number = true
 opt.relativenumber = true
-opt.scrolloff = 3                   -- minimal number of screen lines to keep above and below the cursor
 
 -- search
 opt.showmatch = true                -- show matching brackets when text indicator is over them
@@ -73,7 +72,8 @@ opt.swapfile = false
 opt.timeoutlen = 3000               -- specify the timeout length (in milliseconds) of mapped key sequences
 nmap("<C-s>", "<cmd>update<CR>")    -- save changes
 nmap("<Leader>q", "<cmd>q<CR>")     -- quit file
-nmap("<Leader>w", "<C-w>")          -- window operations, note that you can type <C-w>w to switch to floating window
+-- Note that you can type <C-w>w to switch to floating window and <C-w>K to turn the floating window to a split window at bottom
+nmap("<Leader>w", "<C-w>")          -- window operations
 nmap("<Leader><Leader>", "<C-^>")   -- go to the alternate buffer
 
 -- move cursor by visual lines instead of physical lines when wrapping
@@ -83,7 +83,7 @@ vmap("j", "gj")
 vmap("k", "gk")
 
 -- Neovim terminal mode
--- type :term to enter the terminal 
+-- type :term to enter the terminal
 -- type <Esc> to enter normal mode in the terminal, then you can use file explorer to switch buffers
 map("t", "<Esc>", "<C-\\><C-n>")
 
@@ -118,8 +118,12 @@ require("lazy").setup {
         "EdenEast/nightfox.nvim",
 	    config = {  -- set comment style
             options = { styles = { comments = "italic" } },
-            palettes = { nightfox = { comment = "#ffbcd9" }, dayfox = { comment = "#008000" } }
-        } 
+            palettes = { nightfox = { comment = "#ffbcd9" }, dayfox = { comment = "#008000" } },
+            groups = {
+                nightfox = { FloatBorder = { fg = "#89b4fa" }, TelescopeBorder = { fg = "#89b4fa" } },
+                dayfox = { FloatBorder = { fg = "#8e6f98" }, TelescopeBorder = { fg = "#8e6f98" } }
+            }
+        }
     },
     {   -- color scheme
         "catppuccin/nvim",
@@ -148,7 +152,7 @@ require("lazy").setup {
             }
             -- You can actually use your mouse! Don't be shy.
             -- <Enter> open a file; <C-v> vsplit; <C-x> split; <C-]> cd into the directory;
-            -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter; 
+            -- r: rename; a: create; d: remove; f: create a live filter; F: clear the live filter;
             -- H: toggle dotfiles; I: toggle git-ignore;
             -- P: go to parent node; <BackSpace>: close current opened directory;
             -- c: copy file/directory; p: paste file/directory;
@@ -178,21 +182,21 @@ require("lazy").setup {
                icons_enabled = true,
                globalstatus = true,     -- enable global statusline (only a single statusline at the bottom of neovim)
                theme = "catppuccin",
-               -- left refers to the left-most sections (mode, etc.)  
+               -- left refers to the left-most sections (mode, etc.)
                -- right refers to the right-most sections (location, etc.)
                section_separators = { left = ' ', right = ' ' },
                component_separators = { left = '|', right = '|' }
            },
            sections = {                 -- what components to display in each section?
                lualine_a = { 'mode' },
-               lualine_b = { 'hostname', 'branch', 
-                    { 
+               lualine_b = { 'hostname', 'branch',
+                    {
                         'filename', path = 1,   -- show relative file path
                         symbols = {             -- symbols for file status
                             modified = '[M]', readonly = '[R]',
                             unnamed = '[No Name]', newfile = '[New]'
                         }
-                    } 
+                    }
                 },
                 lualine_c = { 'diff', 'diagnostics', 'searchcount' },
                 lualine_x = { 'encoding', 'fileformat', 'filetype' },
@@ -229,9 +233,9 @@ require("lazy").setup {
         config = function() require("mini.animate").setup() end
     },
     {   -- highlight cursor word's references
-        "echasnovski/mini.cursorword", 
+        "echasnovski/mini.cursorword",
         event = { "BufReadPost", "CursorHold" },
-        config = function() 
+        config = function()
             require("mini.cursorword").setup()
             local function hl_cursor() hl("MiniCursorword", { italic = true, bold = true, standout = true }) end
             hl_cursor()                     -- set highlight format of MiniCursorword
@@ -243,6 +247,11 @@ require("lazy").setup {
             end
             nmap("<Leader>h", toggle_cursor)
         end
+    },
+    {   -- highlight trailing whitespace
+        "echasnovski/mini.trailspace",
+        event = { "BufReadPost", "CursorHold" },
+        config = function() require("mini.trailspace").setup() end
     },
     {   -- auto-pair
         "windwp/nvim-autopairs",
@@ -291,7 +300,7 @@ require("lazy").setup {
                     keymaps = { initial_mode = "insert" }
                 }
             }
-            -- t for telescope; use navigation keys in telescope, such as j, k, <C-d> and <C-u>. 
+            -- t for telescope; use navigation keys in telescope, such as j, k, <C-d> and <C-u>.
             -- <C-v> vsplit, <C-x> split;
             nmap("<Leader>tk", "<cmd>Telescope keymaps<CR>")        -- lists key mappings
             nmap("<Leader>tf", "<cmd>Telescope find_files<CR>")     -- searches for files in the current working directory
@@ -299,7 +308,7 @@ require("lazy").setup {
             nmap("<Leader>to", "<cmd>Telescope oldfiles<CR>")       -- lists recently opened files
             nmap('<Leader>te', '<cmd>Telescope diagnostics<CR>')    -- lists errors
             -- live_grep:           exact matches in the current working directory
-            -- live_grep returns exact matches for the current query after each key press. Therefore it can't be fuzzy 
+            -- live_grep returns exact matches for the current query after each key press. Therefore it can't be fuzzy
             -- unless the grep tool provides a fuzzy engine.
             nmap("<Leader>tl", "<cmd>Telescope live_grep<CR>")
             -- grep_string:         exact matches for the current query, then allows user to apply fuzzy filter.
@@ -311,7 +320,7 @@ require("lazy").setup {
             nmap("<Leader>tr", "<cmd>Telescope resume<CR>")         -- lists results of the previous picker
             -- Telescope git integration, v for version control
             nmap("<Leader>tvc", "<cmd>Telescope git_commits<CR>")   -- git commits, press <CR> to checkout commit
-            nmap("<Leader>tvbc", "<cmd>Telescope git_bcommits<CR>") -- current buffer's git commits 
+            nmap("<Leader>tvbc", "<cmd>Telescope git_bcommits<CR>") -- current buffer's git commits
             nmap("<Leader>tvbr", "<cmd>Telescope git_branches<CR>") -- git branches
             nmap("<Leader>tvs", "<cmd>Telescope git_status<CR>")    -- git status
         end
@@ -370,7 +379,9 @@ require("lazy").setup {
     {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
         "williamboman/mason.nvim",
         event = { "BufReadPost", "CursorHold" },
-        config = { ui = { icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } } }
+        config = {
+            ui = { border = "rounded", icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } }
+        }
     },
     {   -- helper for mason.nvim
         "williamboman/mason-lspconfig.nvim",
@@ -381,9 +392,9 @@ require("lazy").setup {
         }
     },
     {   -- Nvim LSP client configs. Type :lsp to see available commands, such as LspInfo
-        -- I use mason to install servers. 
+        -- I use mason to install servers.
         -- You can also install servers manually, and then add the following line in your LSP setup.
-        --      cmd = { "path-to-your-language-server-executable" } 
+        --      cmd = { "path-to-your-language-server-executable" }
         --      Example:
         --          require("lspconfig").clangd.setup {
         --              cmd = { "path-to-your-clangd-server-executable" }, on_attach = on_attach
@@ -431,7 +442,7 @@ require("lazy").setup {
                 height = 17,                -- Height of the floating window
                 references = {              -- Configure the telescope UI for showing the references cycling window.
                     telescope = require("telescope.themes").get_dropdown({
-                        hide_preview = false, 
+                        hide_preview = false,
                         layout_strategy = "center",
                         layout_config = { width = 0.85 }
                     })
