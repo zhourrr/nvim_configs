@@ -120,7 +120,7 @@ require("lazy").setup {
             options = { styles = { comments = "italic" } },
             palettes = { nightfox = { comment = "#ffbcd9" }, dayfox = { comment = "#008000" } },
             groups = {
-                nightfox = { FloatBorder = { fg = "#89b4fa" }, TelescopeBorder = { fg = "#89b4fa" } },
+                nightfox = { FloatBorder = { fg = "#63cdcf" }, TelescopeBorder = { fg = "#63cdcf" } },
                 dayfox = { FloatBorder = { fg = "#8e6f98" }, TelescopeBorder = { fg = "#8e6f98" } }
             }
         }
