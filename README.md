@@ -6,7 +6,10 @@ It is **_intended to be a minimal configuration which involves only one file (in
 Everything else in this repo is not important.
 
 Copy the `init.lua` file to `~/.config/nvim/`  
-The required plugins will be installed when you open your Neovim for the first time. I use **_lazy.nvim_** as my plugin manager, so everything should work smoothly.  
+The required plugins will be installed when you open your Neovim for the first time. I use **_lazy.nvim_** as my plugin manager, so everything should work smoothly. Make sure the following directories are empty before installing plugins:
+- **data**: `~/.local/share/nvim`
+- **state**: `~/.local/state/nvim`  
+
 The plugins are installed and configured by **_lazy_**, and the relevant setup and keymappings for each plugin are in their **_lazy config_**.
 
 # Screenshots
