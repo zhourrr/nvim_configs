@@ -443,6 +443,7 @@ require("lazy").setup {
                         layout_config = { width = 0.85 }
                     })
                 },
+                border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"},
                 post_open_hook = function(buffer, win)  -- a hook function called after the floating window is opened
                     local function map(shortcut, command)
                         vim.api.nvim_buf_set_keymap(buffer, "n", shortcut, command, { noremap = true, silent = true })
