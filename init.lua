@@ -440,7 +440,7 @@ require("lazy").setup {
                     telescope = require("telescope.themes").get_dropdown({
                         hide_preview = false,
                         layout_strategy = "center",
-                        layout_config = { width = 0.85 }
+                        layout_config = { width = 0.85, height = 0.25 }
                     })
                 },
                 border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"},
