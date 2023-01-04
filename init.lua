@@ -447,8 +447,6 @@ require("lazy").setup {
                 post_open_hook = function(buffer, win)  -- a hook function called after the floating window is opened
                     vim.api.nvim_buf_set_keymap(buffer, "n", "<Leader><Leader>", "<cmd>q<CR><cmd>Telescope resume<CR>",
                         { noremap = true, silent = true })                              -- switch among references
-                    cmd("TSContextDisable")
-                    cmd("TSContextEnable")                                              -- give context information
                 end
             }
             nmap('gpd', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>")
