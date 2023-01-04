@@ -449,11 +449,10 @@ require("lazy").setup {
                 },
                 border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"},
                 post_open_hook = function(buffer, win)  -- a hook function called after the floating window is opened
-                    local function map(shortcut, command)
-                        vim.api.nvim_buf_set_keymap(buffer, "n", shortcut, command, { noremap = true, silent = true })
-                    end
+                    vim.api.nvim_buf_set_keymap(buffer, "n", "<Leader><Leader>", "<cmd>q<CR><cmd>Telescope resume<CR>",
+                        { noremap = true, silent = true })                              -- switch among references
+                    cmd("TSContextDisable")
                     cmd("TSContextEnable")                                              -- give context information
-                    map("<Leader><Leader>", "<cmd>q<CR><cmd>Telescope resume<CR>")      -- switch among references
                 end
             }
             nmap('gpd', "<cmd>lua require('goto-preview').goto_preview_definition()<CR>")
