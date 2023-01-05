@@ -410,7 +410,7 @@ require("lazy").setup {
             local on_attach = function(client, bufnr)                   -- has effects only if the language server is active
                 nmap('gd', '<cmd>Telescope lsp_definitions<CR>')
                 nmap('gD', vim.lsp.buf.declaration)
-                nmap('gr', "<cmd>lua require('goto-preview').goto_preview_references()<CR>")
+                nmap('gr', '<cmd>lua require("goto-preview").goto_preview_references()<CR>')
                 nmap('gt', '<cmd>Telescope lsp_type_definitions<CR>')
                 nmap('gci', '<cmd>Telescope lsp_incoming_calls<CR>')    -- call hierarchy: incoming
                 nmap('gco', '<cmd>Telescope lsp_outgoing_calls<CR>')    -- call hierarchy: outgoing
@@ -491,7 +491,7 @@ require("lazy").setup {
                     { name = "nvim_lsp_signature_help", keyword_length = 1, priority = 8 },
                     { name = "nvim_lsp", keyword_length = 2, priority = 7 },
                     { name = "path", keyword_length = 2, priority = 1 },
-                    { name = "buffer", keyword_length = 4, priority = 1 }
+                    { name = "buffer", keyword_length = 3, priority = 1 }
                 },
                 formatting = {  -- autocompletion menu format
                     fields = { "kind", "abbr", "menu" },                    -- display these fields
