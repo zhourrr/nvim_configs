@@ -110,13 +110,14 @@ opt.runtimepath:prepend(lazypath)
 -- keys:    lazy-load on key mappings
 -- event:   lazy-load on event
 -- cmd:     lazy-load on command
--- config:  a custom setup function or arguments passed to the default plugin setup function
+-- opts:    a table of arguments passed to the default plugin setup function
+-- config:  a custom setup function called when the plugin is loaded
 --
 require("lazy").setup {
     -- UI
     {   -- color scheme
         "EdenEast/nightfox.nvim",
-	    config = {  -- set comment style
+	    opts = {    -- set comment style
             options = { styles = { comments = "italic" } },
             palettes = { nightfox = { comment = "#ffbcd9" }, dayfox = { comment = "#008000" } },
             groups = {
@@ -128,7 +129,7 @@ require("lazy").setup {
     {   -- color scheme
         "catppuccin/nvim",
         name = "catppuccin",
-        config = {  -- set comment color
+        opts = {    -- set comment color
             highlight_overrides = { all = function(colors) return { [ "@comment" ] = { fg = "#008000" } } end }
         }
     },
@@ -177,7 +178,7 @@ require("lazy").setup {
     {   -- status line
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
-        config = {
+        opts = {
            options = {
                icons_enabled = true,
                globalstatus = true,     -- enable global statusline (only a single statusline at the bottom of neovim)
@@ -212,7 +213,7 @@ require("lazy").setup {
         "terrortylor/nvim-comment",
         name = "nvim_comment",
         keys = { { "<Leader>c", mode = "n" }, { "<Leader>c", mode = "v" } },
-        config = {
+        opts = {
             create_mappings = true,
             line_mapping = "<Leader>cc",    -- in normal mode, comment the current line
             operator_mapping = "<Leader>c"  -- in visual mode, comment the selected lines
@@ -256,7 +257,7 @@ require("lazy").setup {
     {   -- auto-pair
         "windwp/nvim-autopairs",
         event = "InsertEnter",
-        config = {
+        opts = {
             disable_in_macro = false,       -- disable when recording or executing a macro
             enable_moveright = true,
             map_cr = true,                  -- map <CR> key
@@ -358,7 +359,7 @@ require("lazy").setup {
     {   -- git integration
         "lewis6991/gitsigns.nvim",
         event = { "BufReadPost", "CursorHold" },
-        config = {
+        opts = {
             preview_config = { border = "rounded" },
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
@@ -379,14 +380,14 @@ require("lazy").setup {
     {   -- LSP servers manager, which automatically install LSP server. Type :mason to see more details
         "williamboman/mason.nvim",
         event = { "BufReadPost", "CursorHold" },
-        config = {
+        opts = {
             ui = { border = "rounded", icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" } }
         }
     },
     {   -- helper for mason.nvim
         "williamboman/mason-lspconfig.nvim",
         event = { "BufReadPost", "CursorHold" },
-        config = {  -- language servers that should always be installed
+        opts = {    -- language servers that should always be installed
             ensure_installed = { "clangd", "rust_analyzer" }
         }
     },
